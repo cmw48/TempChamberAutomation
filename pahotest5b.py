@@ -28,6 +28,7 @@ def on_message(client, userdata, msg):
     for x in range (0, 10):
       deltas[x]=(recent_temps[x] - recent_temps[x+1])
     print(deltas)
+    print(sum(deltas))
     recent_temps.pop(0)
     print(recent_temps)
 
@@ -46,6 +47,6 @@ client.on_subscribe = on_subscribe
 client.on_message = on_message
 client.username_pw_set("wickeddevice", "mXtsGZB5")
 client.connect("mqtt.opensensors.io")
-client.subscribe("/orgs/wd/aqe/temperature/egg008028c05e9b0152", qos=0)
+client.subscribe("/orgs/wd/aqe/temperature/egg0080281b299b0150", qos=0)
 #client.loop_read()
 client.loop_forever()
