@@ -1,4 +1,7 @@
+# this code to be adapted for Raspberry Pi control integration
+
 # External module imports
+
 import RPi.GPIO as GPIO
 import time
 
