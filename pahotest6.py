@@ -26,33 +26,48 @@ def on_message(client, userdata, msg):
   # review recent temps and report
   templistlen = len(recent_temps)
   if templistlen <= 10: 
-    print (str(10-templistlen)+"...")
+    print (str(11-templistlen)+"...")
     # fill up deltaslist
     deltas.append(templistlen)
   elif templistlen > 10 :
-    recent_temps.pop(0)
-    print(recent_temps)
     for x in range (0, 10):
       deltas[x]=(recent_temps[x] - recent_temps[x+1])
     print(deltas)
-    print sum(deltas) 
- 
-    if abs(deltas[0]) == 0 :
-      print("not changing at all")
-    elif 0 <= abs(deltas[0]) <= 0.5:
-      print("changing less than .5...")
-    elif  abs(deltas[0]) > 0.5:
-      print("changing a lot...")
-    else:
-      print(recent_temps)
-  
- 
+    print(sum(deltas))
+    f.write(str(sum(deltas)))
+    json.dump(recent_temps, f)
+    recent_temps.pop(0)
+    print(recent_temps)
+    #print(temp_record)
 
-client = paho.Client(client_id="2940")
-client.on_subscribe = on_subscribe
-client.on_message = on_message
-client.username_pw_set("wickeddevice", "mXtsGZB5")
-client.connect("mqtt.opensensors.io")
-client.subscribe("/orgs/wd/aqe/temperature/egg008028c05e9b0152", qos=0)
-#client.loop_read()
-client.loop_forever()
+ #   print sum(deltas) 
+#  if abs(deltas[0]) == 0 :
+#    print("not changing at all")
+#  elif 0 <= abs(deltas[0]) <= 0.5:
+#    print("changing less than .5...")
+#  elif  abs(deltas[0]) > 0.5:
+#    print("changing a lot...")
+#  else:
+#    print(recent_temps)
+
+print("Here we go! Press CTRL+C to exit")
+try:
+    while 1:
+        f = open('workfile', 'w')
+        client = paho.Client(client_id="2940")
+        client.on_subscribe = on_subscribe
+        client.on_message = on_message
+        client.username_pw_set("wickeddevice", "mXtsGZB5")
+        client.connect("mqtt.opensensors.io")
+        client.subscribe("/orgs/wd/aqe/temperature/egg0080281b299b0150", qos=0)
+        #client.loop_read()
+        client.loop_forever()
+
+except KeyboardInterrupt: # If CTRL+C is pressed, exit cleanly:
+    client.unsubscribe("/orgs/wd/aqe/temperature/egg0080281b299b0150")
+    json.dump(temp_record, f)
+    f.close()
+
+
+
+  
