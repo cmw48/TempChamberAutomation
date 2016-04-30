@@ -12,10 +12,6 @@ recent_temps=[]
 temp_record=[]
 deltas=[]
 
-startStable = time.time()
-stopUnstable = time.time()
-stopStable = time.time() 
-startUnstable = time.time() 
 
 # squawk when subscribe to egg topic is successful
 def on_subscribe(client, userdata, mid, granted_qos):
@@ -25,8 +21,15 @@ def on_subscribe(client, userdata, mid, granted_qos):
 
 # do something as each message is received  
 def on_message(client, userdata, msg):
+  global isStable
+  global startStable
+  global stopStable
+  global startUnstable
+  global stopUnstable
   #print(msg.topic+" "+str(msg.qos)+" "+str(msg.payload))    
   #samplePayload m = {"serial-number":"egg008028c05e9b0152","converted-value":25.96,"converted-units":"degC","raw-value":25.96,"raw-instant-value":25.96,"raw-units":"degC","sensor-part-number":"SHT25"}
+  
+  
   parsed_msg = json.loads(msg.payload)
   raw_instant_temp = (parsed_msg['raw-instant-value'])
   temp_record.append([raw_instant_temp, time.time()])  
@@ -35,6 +38,13 @@ def on_message(client, userdata, msg):
   # review recent temps and report
   templistlen = len(recent_temps)
   if templistlen <= 10: 
+    #once we are warmed up, this condition won't be met and this code will not run
+    #use this spot to initialize local variables until we get threading working
+    startStable = time.time() 
+    stopUnstable = time.time()
+    stopStable = time.time() 
+    startUnstable = time.time() 
+    isStable = False
     print (str(11-templistlen)+"...")
     # fill up deltaslist
     deltas.append(templistlen)
@@ -53,7 +63,7 @@ def on_message(client, userdata, msg):
       if isStable :
         tempmsg = (str(recent_temps[9]) + " ...STABLE... " + str(sum(deltas)) + "   " + time.ctime(int(time.time())))
       else:
-        isStable = 1
+        isStable = True
         tempmsg = (str(recent_temps[9]) + "STABILITY LOCK" + str(sum(deltas)) + "   " + time.ctime(int(time.time())))
         startStable = time.time()
         stopUnstable = time.time()
@@ -62,15 +72,20 @@ def on_message(client, userdata, msg):
     elif  0.05 < abs(sum(deltas)) <= 0.1:
       tempmsg = (str(recent_temps[9]) +"   .nominal.  "  + str(sum(deltas)) + "   " + time.ctime(int(time.time())))
     elif 0.1 < abs(sum(deltas)) <= .3:
-      tempmsg = (str(recent_temps[9]) +" --unstable-- " + str(sum(deltas)) + "   " + time.ctime(int(time.time()))) 
-      isStable = 0
-      tempmsg = (str(recent_temps[9]) + "--UNSTABLE-- " + str(sum(deltas)) + "   " + time.ctime(int(time.time())))
-      stopStable = time.time() 
-      startUnstable = time.time() 
+      if isStable :
+        isStable = False
+        stopStable = time.time() 
+        startUnstable = time.time() 
+        tempmsg = (str(recent_temps[9]) + "**NOT STABLE**" + str(sum(deltas)) + "   " + time.ctime(int(time.time())))
+      else:
+        tempmsg = (str(recent_temps[9]) + "--UNSTABLE-- " + str(sum(deltas)) + "   " + time.ctime(int(time.time())))
     else:
       tempmsg = (str(recent_temps[9]) +" change/slope " + str(sum(deltas)) + "   " + time.ctime(int(time.time())))
-    print(tempmsg)
-
+    #print(isStable)
+    if isStable:
+      print(tempmsg + " stable for " + (time.strftime("%H:%M:%S", time.gmtime(time.time()-startStable))))
+    else: 
+      print(tempmsg + " elapsed... " + (time.strftime("%H:%M:%S", time.gmtime(time.time()-startUnstable))))
 
 print("Here we go! Press CTRL+C to exit")
 try:
@@ -85,18 +100,20 @@ try:
         client.on_message = on_message
         client.username_pw_set("wickeddevice", "mXtsGZB5")
         client.connect("mqtt.opensensors.io")
-        client.subscribe("/orgs/wd/aqe/temperature/egg0080220259180152", qos=0)
+        # use egg0080220259180152
+        client.subscribe("/orgs/wd/aqe/temperature/egg00802a8336180122", qos=0)
         #client.loop_read()
-        client.loop_forever()
+        #client.loop_forever()
         #client.loop()
-        #client.loop.start()
+        client.loop_start()
 
         incr=0
         incr=incr+1
         print("counted " + str(incr))
 
 except KeyboardInterrupt: # If CTRL+C is pressed, exit cleanly:
-    client.unsubscribe("/orgs/wd/aqe/temperature/egg0080281b299b0150")
+    client.loop_stop()
+    client.unsubscribe("/orgs/wd/aqe/temperature/egg00802a8336180122")
     json.dump(temp_record, f)
     f.close()
 
