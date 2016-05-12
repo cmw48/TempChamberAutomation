@@ -1,6 +1,8 @@
 import os
 import time
-import RPi.GPIO as GPIO
+### UNCOMMENT THIS FOR RPI
+#import RPi.GPIO as GPIO
+### 
 import paho.mqtt.client as paho
 import json
 import datetime
@@ -16,13 +18,17 @@ temp_record=[]
 deltas=[]
 
 # setup 
-GPIO.setmode(GPIO.BOARD)
-GPIO.setwarnings(False)
-GPIO.setup(36,GPIO.OUT)
-GPIO.setup(37,GPIO.OUT)
-GPIO.setup(13,GPIO.OUT)
+
+### UNCOMMENT THIS FOR RPI
+#GPIO.setmode(GPIO.BOARD)
+#GPIO.setwarnings(False)
+#GPIO.setup(36,GPIO.OUT)
+#GPIO.setup(37,GPIO.OUT)
+#GPIO.setup(13,GPIO.OUT)
+### 
+
 #Setup variables for user input
-eggserial = "egg0080220259180152"
+eggserial = "egg00802ad8d09b0120"
 count = 0
 
 #os.system('clear')
@@ -113,13 +119,13 @@ try:
         #start temp chamber run
         #assume room temp 25-27c
         #step 1 monitor 
-        f = open('workfile', 'w')
+        f = open('workfiletwo', 'w')
         client = paho.Client(client_id="2940")
         client.on_subscribe = on_subscribe
         client.on_message = on_message
         client.username_pw_set("wickeddevice", "mXtsGZB5")
         client.connect("mqtt.opensensors.io")
-        # if no serial entered use egg0080220259180152
+        # if no serial entered use egg00802ad8d09b0120
         topic = "/orgs/wd/aqe/temperature/" + eggserial
         client.subscribe(topic, qos=0)
         #client.loop_read()
@@ -132,7 +138,8 @@ try:
         print("counted " + str(incr))
 
 except KeyboardInterrupt: # If CTRL+C is pressed, exit cleanly:
-    client.unsubscribe("/orgs/wd/aqe/temperature/egg0080281b299b0150")
+    topic = "/orgs/wd/aqe/temperature/" + eggserial
+    client.unsubscribe(topic)
     json.dump(temp_record, f)
     f.close()
 

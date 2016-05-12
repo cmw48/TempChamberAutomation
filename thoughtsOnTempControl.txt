@@ -13,6 +13,8 @@ b) with set point pulled up, turn potentiometer CCW until needle touches -20 mar
 Remember- eggs generate their own heat.  If ref temp says -28, eggs report around -24. (need verification)
 Also, setpoint on white paper may have needed adjustment.
 
+Looks like when eggs are warmed up 39.10 in egg equates to about 38.1 in box
+
 * unit begins cooling down
 * egg temp drops below ambient
 don't really even need to do anything until we hit -15 or so.
@@ -37,7 +39,7 @@ how long did things stay at 0.2?  How many tenths of a degree did we gain?
 
 
 39.14 hit 7x 
-then, oscillation between a higher number and a lower number39.15-39.17-39.15
+then, oscillation between a higher number and a lower number 39.15-39.17-39.15
 the first time the value goes back down is significant
 then a creep up as the unit continues to heat, or maybe things in the box are equalizing
 mark the time on each 0.1 and on each 0.0
@@ -76,6 +78,18 @@ DofD is an averaged average?  over 50 seconds worth of data.
 
 What is temp at 0.0  = 39.20
 what is the alarm level (if temp drops below lower bound 39.1 or rises above upper bound 39.3?)
+
+
+LCD shows
+current egg temp inside box
+red light for unstable
+green light for stable
+arrow on LCD shows direction of temp (get from DofD sign)
+representation of "force" based on DofD strentgh
+time elapsed since last temp change/time elapsed since temp stable
+indicator that says stability/time goal achieved- changing time in: countdown 
+Aliens style yellow blinky and noise
+ 
 
 
 

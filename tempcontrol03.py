@@ -101,7 +101,7 @@ try:
         client.username_pw_set("wickeddevice", "mXtsGZB5")
         client.connect("mqtt.opensensors.io")
         # use egg0080220259180152
-        client.subscribe("/orgs/wd/aqe/temperature/egg0080225cf8980143", qos=0)
+        client.subscribe("/orgs/wd/aqe/temperature/egg00802ad5e9880121", qos=0)
         #client.loop_read()
         client.loop_forever()
         #client.loop()
@@ -112,7 +112,7 @@ try:
         print("counted " + str(incr))
 
 except KeyboardInterrupt: # If CTRL+C is pressed, exit cleanly:
-    client.unsubscribe("/orgs/wd/aqe/temperature/egg0080281b299b0150")
+    client.unsubscribe("/orgs/wd/aqe/temperature/egg00802ad5e9880121")
     json.dump(temp_record, f)
     f.close()
 

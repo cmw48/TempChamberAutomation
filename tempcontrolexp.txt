@@ -1,0 +1,162 @@
+ 955  exit
+  956  cd logs
+  957  ls -la
+  958  exit
+  959  cd logs
+  960  ls -la
+  961  exit
+  962  ls
+  963  clear
+  964  ./logdatawithputty.sh
+  965  cd logs
+  966  ls -la
+  967  pkill putty
+  968  ./logdatawithputty.sh
+  969  pkill putty
+  970  ls
+  971  ./logdatawithputty.sh
+  972  ps -elf | grep putty
+  973  clear
+  974  cd logs
+  975  ls
+  976  clear
+  977  ls -la
+  978  exit
+  979  cd logs
+  980  ls -la
+  981  mkdir tmp
+  982  cp 20160122133815.tar.gz tmp/
+  983  cd tmp/
+  984  tar xzfv 20160122133815.tar.gz
+  985  cd ..
+  986  rm 20160122133815.tar.gz
+  987  ls
+  988  ./logdatawithputty.sh
+  989  pkill putty
+  990  l
+  991  ls
+  992  cd logs/
+  993  ls -la
+  994  exit
+  995  ./logdatawithputty.sh
+  996  pkill putty
+  997  ls -la
+  998  clear
+  999  ls usb*
+ 1000  clear
+ 1001  cd logs
+ 1002  ls -la
+ 1003  exit
+ 1004  ls
+ 1005  pkill putty
+ 1006  ls -la
+ 1007  ./logdatawithputty.sh
+ 1008  ps -elf | grep putty
+ 1009  clear
+ 1010  ls
+ 1011  clear
+ 1012  cd logs
+ 1013  ls -la
+ 1014  ls
+ 1015  cd logs
+ 1016  ls
+ 1017  ls -la
+ 1018  cd ..
+ 1019  ls
+ 1020  cd Desktop/
+ 1021  ls
+ 1022  ls -lart
+ 1023  cd ..
+ 1024  ls
+ 1025  vi terminal_commands.txt
+ 1026  vi logdatawithputty.sh
+ 1027  cd logs
+ 1028  ls
+ 1029  locate cdlogs
+ 1030  ls
+ 1031  exit
+ 1032  /etc/X11/Xsession
+ 1033  exit
+ 1034  pi
+ 1035  ls
+ 1036  cd logs
+ 1037  ls
+ 1038  history
+ 1039  which gnome
+ 1040  which Xsession
+ 1041  cd /etc/X11/
+ 1042  ls
+ 1043  /etc/X11/Xsession
+ 1044  ls
+ 1045  vi cal_commands.txt
+ 1046  ls/dev/tty/USB*
+ 1047  tail usb0.log
+ 1048  tail -f -n1000 usb1.log
+ 1049  ls
+ 1050  cd logs
+ 1051  ls
+ 1052  cd tmp
+ 1053  ls
+ 1054  cd ..
+ 1055  ls -lart
+ 1056  cd ..
+ 1057  ls
+ 1058  cd Desktop/
+ 1059  ls
+ 1060  locate *.sh
+ 1061  find *.sh
+ 1062  cd ..
+ 1063  ls
+ 1064  history
+ 1065  ls
+ 1066  vi logdatawithputty.sh
+ 1067  ls /dev/ttyUSB3
+ 1068  ls /dev/ttyUSB9
+ 1069  ls /dev/ttyUSB5
+ 1070  vi logdatawithputty.sh
+ 1071  vi terminal_commands.txt
+ 1072  vi cal_commands.txt
+ 1073  dir
+ 1074  cd logs
+ 1075  ls
+ 1076  vi cal_commands.txt
+ 1077  cd ..
+ 1078  vi cal_commands.txt
+ 1079  ls
+ 1080  ps -elf | grep putty
+ 1081  pkill putty
+ 1082  ps -elf | grep putty
+ 1083  clear
+ 1084  ls
+ 1085  cd logs
+ 1086  ls
+ 1087  cd
+ 1088  clear
+ 1089  ./logdatawithputty.sh
+ 1090  ps -elf | grep putty
+ 1091  ls
+ 1092  cd logs/
+ 1093  ls -la
+ 1094  man tar
+ 1095  man tar | grep folder
+ 1096  man tar
+ 1097  man zip
+ 1098  vi terminal_commands.txt
+ 1099  history
+pi@raspberrypi ~ $ ^C
+pi@raspberrypi ~ $ ps -elf | grep putty
+0 S pi       11391     1  0  80   0 -  4914 poll_s Mar07 pts/0    00:56:43 putt  -load ttyUSB0 @ 115200
+0 S pi       11393     1  0  80   0 -  4914 poll_s Mar07 pts/0    00:54:36 putt  -load ttyUSB1 @ 115200
+0 S pi       11395     1  0  80   0 -  4913 poll_s Mar07 pts/0    00:54:01 putt  -load ttyUSB2 @ 115200
+0 S pi       11397     1  0  80   0 -  4913 poll_s Mar07 pts/0    00:55:04 putt  -load ttyUSB3 @ 115200
+0 S pi       11399     1  0  80   0 -  4913 poll_s Mar07 pts/0    00:55:50 putt  -load ttyUSB4 @ 115200
+0 S pi       11401     1  0  80   0 -  4913 poll_s Mar07 pts/0    00:55:24 putt  -load ttyUSB5 @ 115200
+0 S pi       11403     1  0  80   0 -  4913 poll_s Mar07 pts/0    00:55:12 putt  -load ttyUSB6 @ 115200
+0 S pi       11405     1  0  80   0 -  4913 poll_s Mar07 pts/0    00:54:19 putt  -load ttyUSB7 @ 115200
+0 S pi       14801 14766  0  80   0 -   887 pipe_w 15:36 pts/2    00:00:00 grep --color=auto putty
+pi@raspberrypi ~ $
+
+
+
+tar czvf ~/logs/20160311154901.tar.gz usb*
+
