@@ -17,12 +17,14 @@ Mission: read a temperature data point, and decide whether to
 <li> gather a list of the last ten temperatures
 <li> determine the "slope" (rate of change, delta of deltas, whateveryouwannacallit)
 <li> are we stable?  
-   - No? keep going, and run a clock to say how long we've been unstable
-   - Yes? reset the "stable since 00:XX:XX" clock and run for an hour.
+<ul><li> No? keep going, and run a clock to say how long we've been unstable
+<li>Yes? reset the "stable since 00:XX:XX" clock and run for an hour.
+</ul>
 <li> after you have been stable for an hour, do some shtuff:
-    - increment the step counter to say we are coing to the next level
-    - turn a knob to turn the temp up to the next temperature step
-    - flip a switch from COOL to HEAT at one point (when we cross the room temp line)
+<ul><li> increment the step counter to say we are coing to the next level
+<li> turn a knob to turn the temp up to the next temperature step
+<li> flip a switch from COOL to HEAT at one point (when we cross the room temp line)
+</ul>
 <li> detect that the temp is changing, and drop out of "stability lock"     
 <li> do this like 5 more times at different temps.  
 <li> when the last outer loop is done, flip the switch to the middle position to shut that f**ker off.
