@@ -19,6 +19,9 @@ import datetime
 import time
 import sys
 import getopt
+from pyfirmata import Arduino, util
+
+board = Arduino('/dev/ttyACM0')
 
 #declare a global list of temps
 recent_temps=[]
@@ -168,7 +171,11 @@ def main(argv):
     incr=0
     prevelapsedruntime = "00:00:00"
     msgCount=0
+
     try:
+        # change power flag to on
+        # change arduino LED to flashing yellow
+        board.digital[2].write(1)
         #start temp chamber run clock and set blvrun flag
         blvrun = 1
         startblvrun = time.time() 
