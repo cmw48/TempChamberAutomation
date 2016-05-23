@@ -84,6 +84,7 @@ def on_message(client, userdata, msg):
           if abs(sum(deltas)) == 0 :
             if isStable :
               tempmsg = (str(recent_temps[9]) + " ...STABLE... " + str(sum(deltas)) + "   " + time.ctime(int(time.time())))
+              board.digital[4].write(1)
             else:
               isStable = True
               tempmsg = (str(recent_temps[9]) + "STABILITY LOCK" + str(sum(deltas)) + "   " + time.ctime(int(time.time())))
@@ -174,8 +175,9 @@ def main(argv):
 
     try:
         # change power flag to on
-        # change arduino LED to flashing yellow
         board.digital[2].write(1)
+        # set servopower flag to on
+        board.digital[5].write(1)
         #start temp chamber run clock and set blvrun flag
         blvrun = 1
         startblvrun = time.time() 
@@ -216,6 +218,11 @@ def main(argv):
             msgAck = 0
   
     except KeyboardInterrupt: # If CTRL+C is pressed, exit cleanly:
+        # change power flag to off
+        # change arduino LED to green
+        board.digital[5].write(0)
+        board.digital[4].write(0)
+        board.digital[2].write(0)
         client.loop_stop()
         client.unsubscribe("/orgs/wd/aqe/temperature/egg008028c05e9b0152")
         json.dump(temp_record, f)
