@@ -226,11 +226,12 @@ def main(argv):
             prevelapsedruntime = elapsedruntime
             # reset message flag
             thirtySecondsAgo = (time.strftime("%H:%M:%S", time.gmtime(time.time() - startblvrun)))
-            print("thirty seconds msg count: " + str(thirtySecondMsgCount) + "    30sec timer : " + thirtySecondsAgo)
-            if thirtySecondsAgo > 30:
-              print("DUH")
+            
+            if thirtySecondsAgo == "00:00:31":
+              thirtySecondsAgo = "";
+              print("thirty seconds msg count: " + str(thirtySecondMsgCount) + "    30sec timer : " + thirtySecondsAgo)
             else: 
-              print("DERP")
+              pass:
 
               
 
