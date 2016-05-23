@@ -179,6 +179,7 @@ def main(argv):
     incr=0
     prevelapsedruntime = "00:00:00"
     msgCount=0
+    thirtySecondMsgCount=0
 
     try:
         # change power flag to on
@@ -205,6 +206,7 @@ def main(argv):
         client.loop_start()
 
         while blvrun: 
+  
             #get one message (and do a buncha stuff in that function)
             client.on_message = on_message
       
