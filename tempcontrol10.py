@@ -62,6 +62,8 @@ def on_message(client, userdata, msg):
         if templistlen <= 10: 
           #once we are warmed up, this condition won't be met and this code will not run
           #use this spot to initialize local variables until we get threading working
+          # set servopower flag to on
+          board.digital[5].write(1)
           startStable = time.time()
           stopUnstable = time.time()
           stopStable = time.time() 
@@ -71,6 +73,9 @@ def on_message(client, userdata, msg):
           # fill up deltaslist
           deltas.append(templistlen)
         elif templistlen > 10 :
+          # set servopower flag to off
+          board.digital[5].write(0)
+		  
           for x in range (0, 10):
             deltas[x]=(recent_temps[x] - recent_temps[x+1])
           # print(deltas)
@@ -87,6 +92,7 @@ def on_message(client, userdata, msg):
               board.digital[4].write(1)
             else:
               isStable = True
+              board.digital[4].write(1)
               tempmsg = (str(recent_temps[9]) + "STABILITY LOCK" + str(sum(deltas)) + "   " + time.ctime(int(time.time())))
               startStable = time.time()
               stopUnstable = time.time()
@@ -97,6 +103,7 @@ def on_message(client, userdata, msg):
           elif 0.1 < abs(sum(deltas)) <= .3:
             if isStable :
               isStable = False
+              board.digital[4].write(0)
               stopStable = time.time() 
               startUnstable = time.time() 
               tempmsg = (str(recent_temps[9]) + "**NOT STABLE**" + str(sum(deltas)) + "   " + time.ctime(int(time.time())))
@@ -176,8 +183,7 @@ def main(argv):
     try:
         # change power flag to on
         board.digital[2].write(1)
-        # set servopower flag to on
-        board.digital[5].write(1)
+
         #start temp chamber run clock and set blvrun flag
         blvrun = 1
         startblvrun = time.time() 
