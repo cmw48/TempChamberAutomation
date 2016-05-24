@@ -99,7 +99,7 @@ def main(argv):
             # is this message new? (if flag is 1, then its value gets added to count.  if 0, then no addition)
             #TODO: not currently working right.
             msgCount = msgCount + msgAck
-            print(parsed_msg)
+            print(client.msg)
             # advance counts and clocks
             elapsedruntime = (time.strftime("%H:%M:%S", time.gmtime(time.time() - startblvrun)))
             # only print time string when it changes (each second)
