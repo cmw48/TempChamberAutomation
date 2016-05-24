@@ -71,8 +71,6 @@ def main(argv):
     msgCount=0
 
     try:
-
-
         #start temp chamber run clock and set blvrun flag
         blvrun = 1
         startblvrun = time.time() 
@@ -93,23 +91,22 @@ def main(argv):
         #client.loop_forever()
         client.loop_start()
 
-
-            client.on_message = on_message
+        client.on_message = on_message
       
-            # is this message new? (if flag is 1, then its value gets added to count.  if 0, then no addition)
-            #TODO: not currently working right.
-            msgCount = msgCount + msgAck
+        # is this message new? (if flag is 1, then its value gets added to count.  if 0, then no addition)
+        #TODO: not currently working right.
+        msgCount = msgCount + msgAck
 
-            # advance counts and clocks
-            elapsedruntime = (time.strftime("%H:%M:%S", time.gmtime(time.time() - startblvrun)))
-            # only print time string when it changes (each second)
-            if elapsedruntime == prevelapsedruntime:
-              pass
-            else:
-              print("msgs recieved: " + str(msgCount) + "    total run time: " + elapsedruntime)
-            prevelapsedruntime = elapsedruntime
-            # reset message flag
-            msgAck = 0
+        # advance counts and clocks
+        elapsedruntime = (time.strftime("%H:%M:%S", time.gmtime(time.time() - startblvrun)))
+        # only print time string when it changes (each second)
+        if elapsedruntime == prevelapsedruntime:
+          pass
+        else:
+          print("msgs recieved: " + str(msgCount) + "    total run time: " + elapsedruntime)
+        prevelapsedruntime = elapsedruntime
+        # reset message flag
+        msgAck = 0
   
     except KeyboardInterrupt: # If CTRL+C is pressed, exit cleanly:
         # change power flag to off
