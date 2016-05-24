@@ -42,13 +42,12 @@ def on_subscribe(client, userdata, mid, granted_qos):
 # do something as each message is received 
 # TODO: break all the workywork out of this function and just return the message to the main code 
 # should this be a Message object?  (it's not really pervasive...)
-def on_message(client, userdata, msg, parsed_msg):
+def on_message(client, userdata, msg):
     try:
         msgAck = 1  
         #print(msg.topic+" "+str(msg.qos)+" "+str(msg.payload))    
         #samplePayload m = {"serial-number":"egg008028c05e9b0152","converted-value":25.96,"converted-units":"degC","raw-value":25.96,"raw-instant-value":25.96,"raw-units":"degC","sensor-part-number":"SHT25"}
         parsed_msg = json.loads(msg.payload)
-        return parsed_msg
         
     except IOError as e:
       print "I/O error({0}): {1}".format(e.errno, e.strerror)
