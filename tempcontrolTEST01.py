@@ -21,7 +21,8 @@ import sys
 import getopt
 from pyfirmata import Arduino, util
 
-global board = Arduino('/dev/ttyACM0')
+board = Arduino('/dev/ttyACM0')
+
 global msgAck = 0 
 
 #declare a global list of temps
