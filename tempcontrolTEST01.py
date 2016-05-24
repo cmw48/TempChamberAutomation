@@ -44,6 +44,7 @@ def on_subscribe(client, userdata, mid, granted_qos):
 def on_message(client, userdata, msg):
     try:
         msgAck = 1  
+        msgCount = msgCount + msgAck
         #print(msg.topic+" "+str(msg.qos)+" "+str(msg.payload))    
         #samplePayload m = {"serial-number":"egg008028c05e9b0152","converted-value":25.96,"converted-units":"degC","raw-value":25.96,"raw-instant-value":25.96,"raw-units":"degC","sensor-part-number":"SHT25"}
         parsed_msg = json.loads(msg.payload)
@@ -59,6 +60,7 @@ def on_message(client, userdata, msg):
 def main(argv):
     global board
     global msgAck
+    global msgCount
 
     board = Arduino('/dev/ttyACM0')
     msgAck = 0 
@@ -69,9 +71,9 @@ def main(argv):
     board.digital[2].write(1)
     print("Here we go! Press CTRL+C to exit")
     # reset timers and counts
-    incr=0
+    incr = 0
     prevelapsedruntime = "00:00:00"
-    msgCount=0
+    msgCount = 0
 
     try:
         #start temp chamber run clock and set blvrun flag
@@ -98,7 +100,7 @@ def main(argv):
       
             # is this message new? (if flag is 1, then its value gets added to count.  if 0, then no addition)
             #TODO: not currently working right.
-            msgCount = msgCount + msgAck
+
             # print(client.msg)
             # advance counts and clocks
             elapsedruntime = (time.strftime("%H:%M:%S", time.gmtime(time.time() - startblvrun)))
