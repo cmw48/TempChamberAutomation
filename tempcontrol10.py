@@ -197,7 +197,7 @@ def main(argv):
         client.username_pw_set("wickeddevice", "mXtsGZB5")
         client.connect("mqtt.opensensors.io")
 
-        client.subscribe("/orgs/wd/aqe/temperature/egg008028c05e9b0152", qos=0)
+        client.subscribe("/orgs/wd/aqe/temperature/egg00802a84a8880130", qos=0)
 
         # message loop should be one of these (first two down't work for what we want)
         #client.loop_read()
@@ -230,7 +230,7 @@ def main(argv):
         board.digital[4].write(0)
         board.digital[2].write(0)
         client.loop_stop()
-        client.unsubscribe("/orgs/wd/aqe/temperature/egg008028c05e9b0152")
+        client.unsubscribe("/orgs/wd/aqe/temperature/egg0080i2a84a8880130")
         json.dump(temp_record, f)
         f.close()
 

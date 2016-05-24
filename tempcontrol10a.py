@@ -219,10 +219,10 @@ def main(argv):
             # advance counts and clocks
             elapsedruntime = (time.strftime("%H:%M:%S", time.gmtime(time.time() - startblvrun)))
             # only print time string when it changes (each second)
-            if elapsedruntime == prevelapsedruntime:
-              pass
-            else:
-              print("msgs recieved: " + str(msgCount) + "    total run time: " + elapsedruntime)
+            #if elapsedruntime == prevelapsedruntime:
+            #  pass
+            #else:
+              #print("msgs recieved: " + str(msgCount) + "    total run time: " + elapsedruntime)
             prevelapsedruntime = elapsedruntime
             # reset message flag
             thirtySecondsAgo = (time.strftime("%H:%M:%S", time.gmtime(time.time() - startblvrun)))
@@ -231,7 +231,7 @@ def main(argv):
               thirtySecondsAgo = "";
               print("thirty seconds msg count: " + str(thirtySecondMsgCount) + "    30sec timer : " + thirtySecondsAgo)
             else: 
-              pass:
+              pass
 
               
 
