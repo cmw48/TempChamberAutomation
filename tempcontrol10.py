@@ -117,9 +117,9 @@ def on_message(client, userdata, msg):
           else: 
             print(tempmsg + " elapsed... " + (time.strftime("%H:%M:%S", time.gmtime(time.time()-startUnstable))))
           if (sum(deltas)) > 0:
-            board.digital[4].write(0)
+            board.digital[3].write(0)
           else:
-            board.digital[4].write(1)          
+            board.digital[3].write(1)          
                        
         else:
           print("templist error, this should never happen.") 
