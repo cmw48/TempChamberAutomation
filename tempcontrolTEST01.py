@@ -21,11 +21,7 @@ import sys
 import getopt
 from pyfirmata import Arduino, util
 
-global board
-global msgAck
 
-board = Arduino('/dev/ttyACM0')
-msgAck = 0 
 
 #declare a global list of temps
 recent_temps=[]
@@ -61,6 +57,12 @@ def on_message(client, userdata, msg):
       #raise
 
 def main(argv):
+    global board
+    global msgAck
+
+    board = Arduino('/dev/ttyACM0')
+    msgAck = 0 
+
     ##MAIN EXECUTION STARTS HERE##
     # TODO: consider this should be a "main" function or __init__ or what the heck?
     # change power flag to on
