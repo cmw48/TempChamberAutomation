@@ -21,6 +21,8 @@ import sys
 import getopt
 from pyfirmata import Arduino, util
 
+board = Arduino('/dev/ttyACM0')
+
 
 #declare a global list of temps
 recent_temps=[]
