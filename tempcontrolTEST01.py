@@ -44,7 +44,6 @@ def on_subscribe(client, userdata, mid, granted_qos):
 def on_message(client, userdata, msg):
     try:
         msgAck = 1  
-        msgCount = msgCount + msgAck
         #print(msg.topic+" "+str(msg.qos)+" "+str(msg.payload))    
         #samplePayload m = {"serial-number":"egg008028c05e9b0152","converted-value":25.96,"converted-units":"degC","raw-value":25.96,"raw-instant-value":25.96,"raw-units":"degC","sensor-part-number":"SHT25"}
         parsed_msg = json.loads(msg.payload)
@@ -111,7 +110,7 @@ def main(argv):
                 print("msgs recieved: " + str(msgCount) + "    total run time: " + elapsedruntime)
             prevelapsedruntime = elapsedruntime
             # reset message flag
-            msgAck = 0
+
   
     except KeyboardInterrupt: # If CTRL+C is pressed, exit cleanly:
         # change power flag to off
