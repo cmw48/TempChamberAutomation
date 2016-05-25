@@ -43,7 +43,7 @@ class MQTT_Message:
 
     def __init__(self):
         self.values = []      # creates a new list of values for each message
-        self.tempc = []
+        self.tempc = 0
         
     def setmessage(self, msg_json):
         try:
