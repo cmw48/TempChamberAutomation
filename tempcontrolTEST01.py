@@ -22,6 +22,8 @@ import getopt
 from pyfirmata import Arduino, util
 
 
+M = MQTT_Message()
+
 
 #declare a global list of temps
 recent_temps=[]
@@ -85,7 +87,7 @@ def main(argv):
     global board
     global msgAck
     global msgCount
-    M = MQTT_Message()
+
     board = Arduino('/dev/ttyACM0')
     msgAck = 0 
 
