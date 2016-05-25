@@ -59,6 +59,8 @@ class MQTT_Message:
     def getmessage(self):
         try:
             raw_instant_temp = (self.values['raw-instant-value'])    
+            print(self.values)
+            print(self.values['raw-instant-value'])
             return raw_instant_temp
         except IOError as e:
             print "I/O error({0}): {1}".format(e.errno, e.strerror)
@@ -106,8 +108,8 @@ def main(argv):
     print(norman)
     
     
-    M = MQTT_Message()
-    M.setmessage([1,4,5,8])
+    #M = MQTT_Message()
+    #M.setmessage([1,4,5,8])
     
     board = Arduino('/dev/ttyACM0')
     msgAck = 0 
