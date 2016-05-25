@@ -46,6 +46,7 @@ class MQTT_Message:
 
     def setmessage(self, msg_json):
         try:
+
             self.values = msg_json
             print('Hey, just loaded up the list.')
             print(self.values)      
@@ -58,7 +59,7 @@ class MQTT_Message:
    
     def getmessage(self):
         try:
-            raw_instant_temp = (self.values['raw-instant-value'])    
+            raw_instant_temp = (self.values[2])    
             print(self.values)
             print(self.values['raw-instant-value'])
             return raw_instant_temp
@@ -146,12 +147,12 @@ def main(argv):
         #client.loop_forever()
         client.loop_start()
         while blvrun: 
-            client.on_message = on_message
+
       
             # is this message new? (if flag is 1, then its value gets added to count.  if 0, then no addition)
             #TODO: not currently working right.
             insttemp = M.getmessage()
-            print("check this out- " + str(insttemp))
+
             # advance counts and clocks
             elapsedruntime = (time.strftime("%H:%M:%S", time.gmtime(time.time() - startblvrun)))
             # only print time string when it changes (each second)
@@ -159,6 +160,7 @@ def main(argv):
                 pass
             else:
                 print("msgs recieved: " + str(msgCount) + "    total run time: " + elapsedruntime)
+                print("check this out- " + str(insttemp))
             prevelapsedruntime = elapsedruntime
             # reset message flag
 
