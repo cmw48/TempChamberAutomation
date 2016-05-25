@@ -35,8 +35,9 @@ class MyClass:
     """A simple example class"""
     i = 12345
 
-    def f(self):
-        return 'hello world'
+    def f(self, anyname):
+        karen = "hello " + str(anyname)
+        return karen
         
 class MQTT_Message:
 
@@ -101,7 +102,7 @@ def main(argv):
     global msgCount
     
     x = MyClass()
-    norman = x.f()
+    norman = x.f("David")
     print(norman)
     
     
