@@ -149,7 +149,7 @@ def main(argv):
         #client.loop_forever()
         client.loop_start()
         while blvrun: 
-
+            client.on_message = on_message
       
             # is this message new? (if flag is 1, then its value gets added to count.  if 0, then no addition)
             #TODO: not currently working right.
