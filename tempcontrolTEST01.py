@@ -51,7 +51,7 @@ class MQTT_Message:
             self.values = msg_json
             print('Hey, just loaded up the list.')
             print(self.values)      
-            self.tempc = (self.values[2])    
+            self.tempc = self.values[2]    
             msgCount = msgCount + 1
         except IOError as e:
             print "I/O error({0}): {1}".format(e.errno, e.strerror)
@@ -90,8 +90,8 @@ def on_message(client, userdata, msg):
         #print(msg.topic+" "+str(msg.qos)+" "+str(msg.payload))    
         #samplePayload m = {"serial-number":"egg008028c05e9b0152","converted-value":25.96,"converted-units":"degC","raw-value":25.96,"raw-instant-value":25.96,"raw-units":"degC","sensor-part-number":"SHT25"}
         parsed_msg = json.loads(msg.payload)
-        M.setmessage(parsed_msg)
-
+        nerp = M.setmessage(parsed_msg)
+        print(nerp)
         
         
     except IOError as e:
