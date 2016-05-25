@@ -59,10 +59,10 @@ class MQTT_Message:
    
     def getmessage(self):
         try:
-            raw_instant_temp = (self.values[2])    
+            self.tempc = (self.values[2])    
             print(self.values)
             print(str(self.values['raw-instant-value']))
-            return raw_instant_temp
+
         except IOError as e:
             print "I/O error({0}): {1}".format(e.errno, e.strerror)
         except ValueError:
