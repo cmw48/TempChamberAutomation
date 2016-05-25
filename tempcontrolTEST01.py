@@ -43,15 +43,16 @@ class MQTT_Message:
 
     def __init__(self):
         self.values = []      # creates a new list of values for each message
-        self.tempc = ""
+        self.tempc = []
         
     def setmessage(self, msg_json):
         try:
 
             self.values = msg_json
             print('Hey, just loaded up the list.')
-            print(self.values)      
-            self.tempc = self.values(['raw-instant-value']) 
+            print(self.values)  
+            print("Heywood Jablome.")            
+            print(self.values(['raw-instant-value'])) 
             msgCount = msgCount + 1
         except IOError as e:
             print "I/O error({0}): {1}".format(e.errno, e.strerror)
