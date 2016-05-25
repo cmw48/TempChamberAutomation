@@ -151,7 +151,7 @@ def main(argv):
       
             # is this message new? (if flag is 1, then its value gets added to count.  if 0, then no addition)
             #TODO: not currently working right.
-            insttemp = M.getmessage()
+      
 
             # advance counts and clocks
             elapsedruntime = (time.strftime("%H:%M:%S", time.gmtime(time.time() - startblvrun)))
@@ -160,7 +160,7 @@ def main(argv):
                 pass
             else:
                 print("msgs recieved: " + str(msgCount) + "    total run time: " + elapsedruntime)
-                print('check this out ' + str(insttemp))
+                print('check this out ' + str(M.getmessage))
             prevelapsedruntime = elapsedruntime
             # reset message flag
 
