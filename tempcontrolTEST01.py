@@ -50,10 +50,8 @@ class MQTT_Message:
 
             self.values = msg_json
             print('Hey, just loaded up the list.')
-            print(self.values)  
-            print("Heywood Jablome.")            
-            print(self.values['raw-instant-value']) 
-            #msgCount = msgCount + 1
+            self.tempc = self.values['raw-instant-value'] 
+            msgCount = msgCount + 1
             
         except IOError as e:
             print "I/O error({0}): {1}".format(e.errno, e.strerror)
@@ -166,7 +164,7 @@ def main(argv):
                 pass
             else:
                 print("msgs recieved: " + str(msgCount) + "    total run time: " + elapsedruntime)
-                print('check this out ' + str(M.tempc))
+                print('check this out ' + M.tempc)
             prevelapsedruntime = elapsedruntime
             # reset message flag
 
