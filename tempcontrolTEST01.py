@@ -29,6 +29,7 @@ deltas=[]
 
 # why does this need to be here instead of in main?
 global startblvrun
+global M
 
 
 class MQTT_Message:
