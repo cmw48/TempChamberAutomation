@@ -36,7 +36,7 @@ global startblvrun
 class MQTT_Message:
 
     try:
-        def __init__(self, name):
+        def __init__(self):
             self.values = []    # creates a new list of values for each message
 
         def setmessage(self, msg_json):
