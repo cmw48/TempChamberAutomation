@@ -33,26 +33,34 @@ global startblvrun
 
 class MQTT_Message:
 
-    try:
-        def __init__(self):
-            self.values = []    # creates a new list of values for each message
+    def __init__(self):
+        self.values = []    # creates a new list of values for each message
 
-        def setmessage(self, msg_json):
+    def setmessage(self, msg_json):
+        try:
             self.values = msg_json
             print('Hey, just loaded up the list.')
             print(self.values)      
-    
-        def getmessage(self, raw_instant_temp):
+        except IOError as e:
+            print "I/O error({0}): {1}".format(e.errno, e.strerror)
+        except ValueError:
+            print "Could not convert data to an integer."
+        except:
+            print "Unexpected error:", sys.exc_info()[0]
+   
+    def getmessage(self, raw_instant_temp):
+        try:
             raw_instant_temp = (self.values['raw-instant-value'])    
             return raw_instant_temp
+        except IOError as e:
+            print "I/O error({0}): {1}".format(e.errno, e.strerror)
+        except ValueError:
+            print "Could not convert data to an integer."
+        except:
+            print "Unexpected error:", sys.exc_info()[0]    
+            
         
-    except IOError as e:
-      print "I/O error({0}): {1}".format(e.errno, e.strerror)
-    except ValueError:
-      print "Could not convert data to an integer."
-    except:
-      print "Unexpected error:", sys.exc_info()[0]
-        
+ 
         
 # squawk when subscribe to egg topic is successful
 def on_subscribe(client, userdata, mid, granted_qos):
