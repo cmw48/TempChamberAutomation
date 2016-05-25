@@ -32,6 +32,21 @@ deltas=[]
 # why does this need to be here instead of in main?
 global startblvrun
 
+class MQTT_Message:
+    def __init__(self, name):
+        self.values = []    # creates a new list of values for each message
+
+    def setmessage(self, msg_json):
+        self.values = msg_json
+        print('Hey, just loaded up the list.')
+        print(self.values)      
+    
+    def getmessage(self, raw_instant_temp):
+        raw_instant_temp = (self.values['raw-instant-value'])    
+        return raw_instant_temp
+        
+        
+        
 # squawk when subscribe to egg topic is successful
 def on_subscribe(client, userdata, mid, granted_qos):
     print("Subscribed: "+str(mid)+" "+str(granted_qos))
@@ -43,10 +58,11 @@ def on_subscribe(client, userdata, mid, granted_qos):
 # should this be a Message object?  (it's not really pervasive...)
 def on_message(client, userdata, msg):
     try:
-        msgAck = 1  
         #print(msg.topic+" "+str(msg.qos)+" "+str(msg.payload))    
         #samplePayload m = {"serial-number":"egg008028c05e9b0152","converted-value":25.96,"converted-units":"degC","raw-value":25.96,"raw-instant-value":25.96,"raw-units":"degC","sensor-part-number":"SHT25"}
         parsed_msg = json.loads(msg.payload)
+        MQTT_Message.setmessage(self, parsed_msg)
+        
         
     except IOError as e:
       print "I/O error({0}): {1}".format(e.errno, e.strerror)
@@ -100,7 +116,7 @@ def main(argv):
             # is this message new? (if flag is 1, then its value gets added to count.  if 0, then no addition)
             #TODO: not currently working right.
 
-            # print(client.msg)
+
             # advance counts and clocks
             elapsedruntime = (time.strftime("%H:%M:%S", time.gmtime(time.time() - startblvrun)))
             # only print time string when it changes (each second)
