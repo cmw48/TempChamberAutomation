@@ -29,7 +29,7 @@ deltas=[]
 
 # why does this need to be here instead of in main?
 global startblvrun
-global M = MQTT_Message()
+global M 
 
 class MyClass:
     """A simple example class"""
@@ -148,7 +148,7 @@ def main(argv):
             # is this message new? (if flag is 1, then its value gets added to count.  if 0, then no addition)
             #TODO: not currently working right.
 
-
+             print("check this out- " + M.getmessage(temp))
             # advance counts and clocks
             elapsedruntime = (time.strftime("%H:%M:%S", time.gmtime(time.time() - startblvrun)))
             # only print time string when it changes (each second)
