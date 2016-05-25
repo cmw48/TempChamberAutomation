@@ -101,7 +101,8 @@ def main(argv):
     global msgCount
     
     x = MyClass()
-    x.f()
+    norman = x.f()
+    print(norman)
     
     
     M = MQTT_Message()
