@@ -148,7 +148,7 @@ def main(argv):
             # is this message new? (if flag is 1, then its value gets added to count.  if 0, then no addition)
             #TODO: not currently working right.
             insttemp = M.getmessage()
-            print("check this out- " + )
+            print("check this out- " + str(insttemp))
             # advance counts and clocks
             elapsedruntime = (time.strftime("%H:%M:%S", time.gmtime(time.time() - startblvrun)))
             # only print time string when it changes (each second)
