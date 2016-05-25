@@ -52,7 +52,7 @@ class MQTT_Message:
             print('Hey, just loaded up the list.')
             print(self.values)  
             print("Heywood Jablome.")            
-            print(self.values[5]) 
+            print(self.values['raw-instant-value']) 
             msgCount = msgCount + 1
         except IOError as e:
             print "I/O error({0}): {1}".format(e.errno, e.strerror)
