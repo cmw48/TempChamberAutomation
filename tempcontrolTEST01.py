@@ -102,11 +102,12 @@ def main(argv):
     global msgCount
     
     x = MyClass()
-    norman = x.f("David")
+    norman = x.f("David ")
     print(norman)
     
     
     M = MQTT_Message()
+    M.setmessage([1,4,5,8])
     
     board = Arduino('/dev/ttyACM0')
     msgAck = 0 
