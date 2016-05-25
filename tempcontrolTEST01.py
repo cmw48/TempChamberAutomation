@@ -32,6 +32,7 @@ deltas=[]
 # why does this need to be here instead of in main?
 global startblvrun
 
+
 class MQTT_Message:
 
     try:
@@ -69,7 +70,7 @@ def on_message(client, userdata, msg):
         #print(msg.topic+" "+str(msg.qos)+" "+str(msg.payload))    
         #samplePayload m = {"serial-number":"egg008028c05e9b0152","converted-value":25.96,"converted-units":"degC","raw-value":25.96,"raw-instant-value":25.96,"raw-units":"degC","sensor-part-number":"SHT25"}
         parsed_msg = json.loads(msg.payload)
-        MQTT_Message.setmessage(self, parsed_msg)
+        M.setmessage(self, parsed_msg)
         
         
     except IOError as e:
@@ -84,7 +85,7 @@ def main(argv):
     global board
     global msgAck
     global msgCount
-
+    M = MQTT_Message()
     board = Arduino('/dev/ttyACM0')
     msgAck = 0 
 
