@@ -160,7 +160,7 @@ def main(argv):
                 pass
             else:
                 print("msgs recieved: " + str(msgCount) + "    total run time: " + elapsedruntime)
-                print('check this out ' + str(M.getmessage))
+                print('check this out ' + str(M.tempc))
             prevelapsedruntime = elapsedruntime
             # reset message flag
 
