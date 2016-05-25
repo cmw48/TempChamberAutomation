@@ -61,7 +61,7 @@ class MQTT_Message:
         try:
             raw_instant_temp = (self.values[2])    
             print(self.values)
-            print(self.values['raw-instant-value'])
+            print(str(self.values['raw-instant-value']))
             return raw_instant_temp
         except IOError as e:
             print "I/O error({0}): {1}".format(e.errno, e.strerror)
@@ -88,8 +88,8 @@ def on_message(client, userdata, msg):
         #print(msg.topic+" "+str(msg.qos)+" "+str(msg.payload))    
         #samplePayload m = {"serial-number":"egg008028c05e9b0152","converted-value":25.96,"converted-units":"degC","raw-value":25.96,"raw-instant-value":25.96,"raw-units":"degC","sensor-part-number":"SHT25"}
         parsed_msg = json.loads(msg.payload)
-        nerp = M.setmessage(parsed_msg)
-        print('nerp equals ' + nerp)
+        #nerp = M.setmessage(parsed_msg)
+        #print('nerp equals ' + nerp)
         
         
     except IOError as e:
@@ -160,7 +160,7 @@ def main(argv):
                 pass
             else:
                 print("msgs recieved: " + str(msgCount) + "    total run time: " + elapsedruntime)
-                print("check this out- " + str(insttemp))
+                print('check this out ' + str(insttemp))
             prevelapsedruntime = elapsedruntime
             # reset message flag
 
