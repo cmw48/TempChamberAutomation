@@ -31,7 +31,13 @@ deltas=[]
 global startblvrun
 global M
 
+class MyClass:
+    """A simple example class"""
+    i = 12345
 
+    def f(self):
+        return 'hello world'
+        
 class MQTT_Message:
 
     def __init__(self):
@@ -94,6 +100,9 @@ def main(argv):
     global msgAck
     global msgCount
 
+    x.f()
+    
+    
     M = MQTT_Message()
     
     board = Arduino('/dev/ttyACM0')
