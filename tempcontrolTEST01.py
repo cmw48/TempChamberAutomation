@@ -56,7 +56,7 @@ class MQTT_Message:
         except:
             print "Unexpected error:", sys.exc_info()[0]
    
-    def getmessage(self, raw_instant_temp):
+    def getmessage(self):
         try:
             raw_instant_temp = (self.values['raw-instant-value'])    
             return raw_instant_temp
@@ -147,8 +147,8 @@ def main(argv):
       
             # is this message new? (if flag is 1, then its value gets added to count.  if 0, then no addition)
             #TODO: not currently working right.
-
-            print("check this out- " + M.getmessage(temp))
+            insttemp = M.getmessage()
+            print("check this out- " + )
             # advance counts and clocks
             elapsedruntime = (time.strftime("%H:%M:%S", time.gmtime(time.time() - startblvrun)))
             # only print time string when it changes (each second)
