@@ -87,7 +87,8 @@ def on_message(client, userdata, msg):
         #print(msg.topic+" "+str(msg.qos)+" "+str(msg.payload))    
         #samplePayload m = {"serial-number":"egg008028c05e9b0152","converted-value":25.96,"converted-units":"degC","raw-value":25.96,"raw-instant-value":25.96,"raw-units":"degC","sensor-part-number":"SHT25"}
         parsed_msg = json.loads(msg.payload)
-        M.setmessage(parsed_msg)
+        nerp = M.setmessage(parsed_msg)
+        print('nerp equals ' + nerp)
         
         
     except IOError as e:
@@ -108,8 +109,8 @@ def main(argv):
     print(norman)
     
     
-    #M = MQTT_Message()
-    #M.setmessage([1,4,5,8])
+    M = MQTT_Message()
+    M.setmessage([1,4,5,8])
     
     board = Arduino('/dev/ttyACM0')
     msgAck = 0 
