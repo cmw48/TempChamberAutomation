@@ -108,7 +108,8 @@ def main(argv):
     global msgAck
     global msgCount
     global x
-        
+    global M
+    
     x = MyClass()
     norman = x.f("David ")
     print(norman)
