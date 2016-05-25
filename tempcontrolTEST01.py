@@ -42,14 +42,16 @@ class MyClass:
 class MQTT_Message:
 
     def __init__(self):
-        self.values = []    # creates a new list of values for each message
-
+        self.values = []      # creates a new list of values for each message
+        self.tempc = 0
+        
     def setmessage(self, msg_json):
         try:
 
             self.values = msg_json
             print('Hey, just loaded up the list.')
             print(self.values)      
+            self.tempc = (self.values[2])    
         except IOError as e:
             print "I/O error({0}): {1}".format(e.errno, e.strerror)
         except ValueError:
@@ -59,7 +61,6 @@ class MQTT_Message:
    
     def getmessage(self):
         try:
-            self.tempc = (self.values[2])    
             print(self.values)
             print(str(self.values['raw-instant-value']))
 
