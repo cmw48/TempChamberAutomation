@@ -99,7 +99,8 @@ def main(argv):
     global board
     global msgAck
     global msgCount
-
+    
+    x = MyClass()
     x.f()
     
     
