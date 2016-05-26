@@ -45,7 +45,6 @@ class MQTT_Message:
         try:
 
             self.values = msg_json
-            print('Hey, just loaded up the list.')
             self.tempc = self.values['raw-instant-value'] 
             
         except IOError as e:
@@ -273,8 +272,7 @@ def main(argv):
             if elapsedruntime == prevelapsedruntime:
                 pass
             else:
-                print("msgs recieved: " + str(msgCount) + "   time since last msg:     " + timeSinceLastMessage + "   total run time: " + elapsedruntime)
-                print('check this out ' + str(M.tempc))
+                print('current temp:  ' + str(M.tempc) + "   msgs recieved:  " + str(msgCount) + "   time since last msg:  " + timeSinceLastMessage + "   total run time:  " + elapsedruntime)
             prevelapsedruntime = elapsedruntime
             # reset message flag
             if (time.time() - lastMessageTimeStamp) < 20 :
