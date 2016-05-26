@@ -277,7 +277,7 @@ def main(argv):
                 print('check this out ' + str(M.tempc))
             prevelapsedruntime = elapsedruntime
             # reset message flag
-  
+            print (time.gmtime(time.time() - lastMessageTimeStamp)) 
     except KeyboardInterrupt: # If CTRL+C is pressed, exit cleanly:
         # change power flag to off
         # change arduino LED to green
