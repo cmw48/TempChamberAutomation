@@ -59,7 +59,7 @@ class MQTT_Message:
         except ValueError:
             print "Could not convert data to an integer."
         except:
-            print "Unexpected error:", sys.exc_info()[0]
+            print "Unexpected errorC:", sys.exc_info()[0]
    
     def getmessage(self):
         try:
@@ -71,7 +71,7 @@ class MQTT_Message:
         except ValueError:
             print "Could not convert data to an integer."
         except:
-            print "Unexpected error:", sys.exc_info()[0]    
+            print "Unexpected errorA:", sys.exc_info()[0]    
             
         
  
@@ -99,7 +99,7 @@ def on_message(client, userdata, msg):
     except ValueError:
       print "Could not convert data to an integer."
     except:
-      print "Unexpected error:", sys.exc_info()[0]
+      print "Unexpected errorB:", sys.exc_info()[0]
       #raise
 
 def main(argv):
