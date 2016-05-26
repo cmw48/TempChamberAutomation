@@ -234,7 +234,7 @@ def main(argv):
     # reset timers and counts
     prevelapsedruntime = "00:00:00"
     timeSinceLastMessage = time.time()
-    lastMessageTimeStamp = 0
+    lastMessageTimeStamp = time.time()
     prevmsgCount = 0
 
     try:
@@ -280,8 +280,10 @@ def main(argv):
             if (time.time() - lastMessageTimeStamp) < 45 :
                 pass
             else: 
+                print("reconnecting...")
                 client.connect("mqtt.opensensors.io")
                 client.subscribe("/orgs/wd/aqe/temperature/egg00802a84a8880130", qos=0)            
+                lastMessageTimeStamp = time.time()
                
     except KeyboardInterrupt: # If CTRL+C is pressed, exit cleanly:
         # change power flag to off
