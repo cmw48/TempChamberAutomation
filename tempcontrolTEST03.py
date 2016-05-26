@@ -110,6 +110,7 @@ def main(argv):
     global x
     global M
     
+    
     x = MyClass()
     norman = x.f("David ")
     print(norman)
@@ -129,7 +130,10 @@ def main(argv):
     # reset timers and counts
     incr = 0
     prevelapsedruntime = "00:00:00"
-
+    timeSinceLastMessage = "00:00:00"
+    lastMessageTimeStamp = "00:00:00"
+    
+    prevmsgCount = 0
     try:
         #start temp chamber run clock and set blvrun flag
         blvrun = 1
@@ -159,13 +163,20 @@ def main(argv):
 
             # advance counts and clocks
             elapsedruntime = (time.strftime("%H:%M:%S", time.gmtime(time.time() - startblvrun)))
+            if msgCount == prevmsgCount:
+                timeSinceLastMessage = (time.strftime("%H:%M:%S", time.gmtime(time.time() - lastMessageTimeStamp)))
+            else:
+                # reset timeSinceLastMessage
+                lastMessageTimeStamp = time.time()
+                
             # only print time string when it changes (each second)
             if elapsedruntime == prevelapsedruntime:
                 pass
             else:
-                print("msgs recieved: " + str(msgCount) + "    total run time: " + elapsedruntime)
+                print("msgs recieved: " + str(msgCount) + "   time since last msg:     " + timeSinceLastMessage + "   total run time: " + elapsedruntime)
                 print('check this out ' + str(M.tempc))
             prevelapsedruntime = elapsedruntime
+            prevmsgCount = msgCount
             # reset message flag
 
   
