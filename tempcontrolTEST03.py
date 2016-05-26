@@ -130,7 +130,7 @@ def main(argv):
     # reset timers and counts
     incr = 0
     prevelapsedruntime = "00:00:00"
-    timeSinceLastMessage = "00:00:00"
+    timeSinceLastMessage = time.time()
     lastMessageTimeStamp = 0
     
     prevmsgCount = 0
