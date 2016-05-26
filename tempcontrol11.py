@@ -277,10 +277,11 @@ def main(argv):
                 print('check this out ' + str(M.tempc))
             prevelapsedruntime = elapsedruntime
             # reset message flag
-            if (time.time() - lastMessageTimeStamp) < 45 :
+            if (time.time() - lastMessageTimeStamp) < 20 :
                 pass
             else: 
                 print("reconnecting...")
+                client.unsubscribe("/orgs/wd/aqe/temperature/egg00802a84a8880130")
                 client.connect("mqtt.opensensors.io")
                 client.subscribe("/orgs/wd/aqe/temperature/egg00802a84a8880130", qos=0)            
                 lastMessageTimeStamp = time.time()
