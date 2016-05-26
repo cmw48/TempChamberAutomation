@@ -131,7 +131,7 @@ def main(argv):
     incr = 0
     prevelapsedruntime = "00:00:00"
     timeSinceLastMessage = "00:00:00"
-    lastMessageTimeStamp = "00:00:00"
+    lastMessageTimeStamp = 0
     
     prevmsgCount = 0
     try:
