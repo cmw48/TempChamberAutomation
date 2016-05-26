@@ -92,7 +92,7 @@ def on_message(client, userdata, msg):
 
         parsed_msg = json.loads(msg.payload)
         M.setmessage(parsed_msg)
-        msgCount = msgCount + 1
+        #msgCount = msgCount + 1
         
     except IOError as e:
       print "I/O error({0}): {1}".format(e.errno, e.strerror)
