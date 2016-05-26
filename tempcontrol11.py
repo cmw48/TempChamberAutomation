@@ -265,11 +265,6 @@ def main(argv):
             #get one message (and do a buncha stuff in that function)
             client.on_message = on_message
       
-            # is this message new? (if flag is 1, then its value gets added to count.  if 0, then no addition)
-            #TODO: not currently working right.
-            msgCount = msgCount + msgAck
-
-
             # advance counts and clocks
             elapsedruntime = (time.strftime("%H:%M:%S", time.gmtime(time.time() - startblvrun)))
             timeSinceLastMessage = (time.strftime("%H:%M:%S", time.gmtime(time.time() - lastMessageTimeStamp)))
