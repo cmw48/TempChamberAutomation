@@ -89,12 +89,15 @@ def on_message(client, userdata, msg):
     try:
         global msgCount
         global M
+        global lastMessageTimeStamp
+        
         #print(msg.topic+" "+str(msg.qos)+" "+str(msg.payload))    
         #samplePayload m = {"serial-number":"egg008028c05e9b0152","converted-value":25.96,"converted-units":"degC","raw-value":25.96,"raw-instant-value":25.96,"raw-units":"degC","sensor-part-number":"SHT25"}
 
         parsed_msg = json.loads(msg.payload)
         M.setmessage(parsed_msg)
         msgCount = msgCount + 1
+        lastMessageTimeStamp = time.time()
         
     except IOError as e:
       print "I/O error({0}): {1}".format(e.errno, e.strerror)
@@ -109,7 +112,7 @@ def main(argv):
     global msgAck
     global x
     global M
-    
+    global lastMessageTimeStamp
     
     x = MyClass()
     norman = x.f("David ")
@@ -163,11 +166,7 @@ def main(argv):
 
             # advance counts and clocks
             elapsedruntime = (time.strftime("%H:%M:%S", time.gmtime(time.time() - startblvrun)))
-            if msgCount == prevmsgCount:
-                timeSinceLastMessage = (time.strftime("%H:%M:%S", time.gmtime(time.time() - lastMessageTimeStamp)))
-            else:
-                # reset timeSinceLastMessage
-                lastMessageTimeStamp = time.time()
+           timeSinceLastMessage = (time.strftime("%H:%M:%S", time.gmtime(time.time() - lastMessageTimeStamp)))
                 
             # only print time string when it changes (each second)
             if elapsedruntime == prevelapsedruntime:
@@ -176,7 +175,6 @@ def main(argv):
                 print("msgs recieved: " + str(msgCount) + "   time since last msg:     " + timeSinceLastMessage + "   total run time: " + elapsedruntime)
                 print('check this out ' + str(M.tempc))
             prevelapsedruntime = elapsedruntime
-            prevmsgCount = msgCount
             # reset message flag
 
   
