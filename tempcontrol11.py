@@ -277,7 +277,12 @@ def main(argv):
                 print('check this out ' + str(M.tempc))
             prevelapsedruntime = elapsedruntime
             # reset message flag
-            print (time.time() - lastMessageTimeStamp)
+            if (time.time() - lastMessageTimeStamp) < 45 :
+                pass
+            else: 
+                client.connect("mqtt.opensensors.io")
+                client.subscribe("/orgs/wd/aqe/temperature/egg00802a84a8880130", qos=0)            
+               
     except KeyboardInterrupt: # If CTRL+C is pressed, exit cleanly:
         # change power flag to off
         # change arduino LED to green
