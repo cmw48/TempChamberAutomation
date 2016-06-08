@@ -78,6 +78,16 @@ def on_subscribe(client, userdata, mid, granted_qos):
 # TODO: break all the workywork out of this function and just return the message to the main code 
 # should this be a Message object?  (it's not really pervasive...)
 def on_message(client, userdata, msg):
+#pin assignments
+# pin 0 is rx , pin 1 is tx
+# pin 2 is HIGH when machine is under test
+# pin 3 is HIGH when we are heating
+# pin 4 is HIGH when we are stable
+# pin 5 is HIGH when we enable temp servo control
+# pin 6 is HIGH is the flickRGB i/o pin
+# pin 7 is HIGH when we enable the COOL/OFF/HEAT servo
+
+
     try:
         global isStable
         global startStable
@@ -157,12 +167,15 @@ def on_message(client, userdata, msg):
             #print(isStable)
           if isStable:
             stableSince = time.time()-startStable
-            print(tempmsg + " stable for " + (time.strftime("%H:%M:%S", time.gmtime(stableSince))))
+            print(tempmsg + " stable for the past " + (time.strftime("%H:%M:%S", time.gmtime(stableSince))))
           else: 
             print(tempmsg + " elapsed... " + (time.strftime("%H:%M:%S", time.gmtime(time.time()-startUnstable))))
+          #TODO add blinkrate based on how large sumdeltas error is?
           if (sum(deltas)) > 0:
+            # cooling
             board.digital[3].write(0)
           else:
+            # heating
             board.digital[3].write(1)          
                        
         else:
