@@ -22,7 +22,7 @@ import getopt
 from pyfirmata import Arduino, util
 
 try:
-    board = Arduino('/dev/ttyACM0')
+    board = Arduino('/dev/tty1')
 except IOError as e:
     print "I/O error({0}): {1}".format(e.errno, e.strerror)
 except ValueError:
