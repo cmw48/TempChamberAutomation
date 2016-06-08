@@ -252,7 +252,9 @@ def main(argv):
     try:
         # change power flag to on
         board.digital[2].write(1)
+        print("test running, dummy.\n")
         board.digital[5].write(1)
+        print("make with the blinky, dummy.\n")
         #start temp chamber run clock and set blvrun flag
         blvrun = 1
         startblvrun = time.time() 
