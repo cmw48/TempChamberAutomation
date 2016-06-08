@@ -21,7 +21,14 @@ import sys
 import getopt
 from pyfirmata import Arduino, util
 
-board = Arduino('/dev/ttyACM0')
+try:
+    board = Arduino('/dev/ttyACM0')
+except IOError as e:
+    print "I/O error({0}): {1}".format(e.errno, e.strerror)
+except ValueError:
+    print "Could not convert data to an integer."
+except:
+    print "Unexpected errorC:", sys.exc_info()[0]
 
 #declare a global list of temps
 recent_temps=[]
