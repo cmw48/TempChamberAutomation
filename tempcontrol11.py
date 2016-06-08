@@ -84,12 +84,10 @@ def on_message(client, userdata, msg):
         global stopStable
         global startUnstable
         global stopUnstable
+        global stableSince
         global msgCount
         global M
         global lastMessageTimeStamp
-        # msgack deprecated
-        global msgAck
-        msgAck = 1  
 
         #print(msg.topic+" "+str(msg.qos)+" "+str(msg.payload))    
         #samplePayload m = {"serial-number":"egg008028c05e9b0152","converted-value":25.96,"converted-units":"degC","raw-value":25.96,"raw-instant-value":25.96,"raw-units":"degC","sensor-part-number":"SHT25"}
@@ -158,7 +156,8 @@ def on_message(client, userdata, msg):
             tempmsg = (str(recent_temps[9]) +" change/slope " + str(sum(deltas)) + "   " + time.ctime(int(time.time())))
             #print(isStable)
           if isStable:
-            print(tempmsg + " stable for " + (time.strftime("%H:%M:%S", time.gmtime(time.time()-startStable))))
+            stableSince = time.time()-startStable
+            print(tempmsg + " stable for " + (time.strftime("%H:%M:%S", time.gmtime(stableSince))))
           else: 
             print(tempmsg + " elapsed... " + (time.strftime("%H:%M:%S", time.gmtime(time.time()-startUnstable))))
           if (sum(deltas)) > 0:
@@ -185,11 +184,12 @@ def main(argv):
     port = 1883
     password = "mXtsGZB5"
     topic = "/orgs/wd/aqe/temperature"
+    eggserial = "egg00802a84a8880130"
     username = "wickeddevice"
     verbose = False
 
     try:
-        opts, args = getopt.getopt(argv, "dh:i:k:p:P:t:u:v", ["debug", "id", "keepalive", "port", "password", "topic", "username", "verbose"])
+        opts, args = getopt.getopt(argv, "dh:i:k:p:P:t:u:v", ["debug", "id", "keepalive", "port", "password", "topic", "eggserial", "username", "verbose"])
     except getopt.GetoptError as s:
         print_usage()
         sys.exit(2)
@@ -209,6 +209,9 @@ def main(argv):
         elif opt in ("-t", "--topic"):
             topic = arg
             print(topic)
+        elif opt in ("-e", "--eggserial"):
+            eggserial = arg
+            print(eggserial)            
         elif opt in ("-u", "--username"):
             username = arg
         elif opt in ("-v", "--verbose"):
@@ -219,10 +222,7 @@ def main(argv):
         print_usage()
         sys.exit(2)
 
-    # does this work as a global init?  Why?
-
     global board
-    global msgAck
     global M
     global lastMessageTimeStamp
     ##MAIN EXECUTION STARTS HERE##
@@ -239,7 +239,7 @@ def main(argv):
     try:
         # change power flag to on
         board.digital[2].write(1)
-
+        board.digital[5].write(1)
         #start temp chamber run clock and set blvrun flag
         blvrun = 1
         startblvrun = time.time() 
