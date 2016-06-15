@@ -274,7 +274,7 @@ def main(argv):
 
         client.username_pw_set("wickeddevice", "mXtsGZB5")
         client.connect("mqtt.opensensors.io")
-        subscription = topic + eggserial
+        subscription = topic + "/" + eggserial
         client.subscribe(subscription, qos=0)
 
         # message loop should be one of these (first two down't work for what we want)
