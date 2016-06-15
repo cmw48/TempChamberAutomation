@@ -204,12 +204,12 @@ def main(argv):
     port = 1883
     password = "mXtsGZB5"
     topic = "/orgs/wd/aqe/temperature"
-    eggserial = "egg00802a84a8880130"
+    eggserial = "egg008028735b980112"
     username = "wickeddevice"
     verbose = False
 
     try:
-        opts, args = getopt.getopt(argv, "dh:i:k:p:P:t:u:v", ["debug", "id", "keepalive", "port", "password", "topic", "eggserial", "username", "verbose"])
+        opts, args = getopt.getopt(argv, "dh:i:k:p:P:t:e:u:v", ["debug", "id", "keepalive", "port", "password", "topic", "eggserial", "username", "verbose"])
     except getopt.GetoptError as s:
         print_usage()
         sys.exit(2)
@@ -274,8 +274,8 @@ def main(argv):
 
         client.username_pw_set("wickeddevice", "mXtsGZB5")
         client.connect("mqtt.opensensors.io")
-
-        client.subscribe("/orgs/wd/aqe/temperature/egg00802a84a8880130", qos=0)
+        subscription = topic + eggserial
+        client.subscribe(subscription, qos=0)
 
         # message loop should be one of these (first two down't work for what we want)
         #client.loop_read()
