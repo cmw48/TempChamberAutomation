@@ -259,9 +259,9 @@ def main(argv):
     try:
         # change power flag to on
         board.digital[2].write(1)
-        print("test running, dummy.\n")
+        print("test running.\n")
         board.digital[5].write(1)
-        print("make with the blinky, dummy.\n")
+        
         #start temp chamber run clock and set blvrun flag
         blvrun = 1
         startblvrun = time.time() 
@@ -301,9 +301,9 @@ def main(argv):
                 pass
             else: 
                 print("reconnecting...")
-                client.unsubscribe("/orgs/wd/aqe/temperature/egg00802a84a8880130")
+                client.unsubscribe(subscription)
                 client.connect("mqtt.opensensors.io")
-                client.subscribe("/orgs/wd/aqe/temperature/egg00802a84a8880130", qos=0)            
+                client.subscribe(subscription, qos=0)            
                 lastMessageTimeStamp = time.time()
                
     except KeyboardInterrupt: # If CTRL+C is pressed, exit cleanly:
@@ -313,7 +313,7 @@ def main(argv):
         board.digital[4].write(0)
         board.digital[2].write(0)
         client.loop_stop()
-        client.unsubscribe("/orgs/wd/aqe/temperature/egg00802a84a8880130")
+        client.unsubscribe(subscription)
         json.dump(temp_record, f)
         f.close()
 
