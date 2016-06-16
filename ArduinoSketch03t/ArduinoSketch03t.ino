@@ -124,7 +124,7 @@ void loop()
    // uncomment for testing
    //testrunval = 1;
    //stableval = 1;
-   //heatingval = 0;
+   //heatingval = 1;
    //servopowerval = 1;
    
    if (testrunval == 0) {
@@ -184,11 +184,11 @@ void loop()
           pixels.show(); // This sends the updated pixel color to the hardware.
           delay(delayval/blinkrate); // Delay for a period of time (in milliseconds).
         }
-   // end onoff check
+    } // end onoff check
 
         //delay(delayval); // Delay for a period of time (in milliseconds).
 
         //end for loop for neopixel count
       
-    }
+
 }

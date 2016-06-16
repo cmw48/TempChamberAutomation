@@ -35,27 +35,19 @@ void analogWriteCallback(byte pin, int value)
 
 //pin assignments
 // pin 0 is rx , pin 1 is tx
-// pin 2 is HIGH when test is running, low when warming up
+// pin 2 is HIGH when machine is on
 // pin 3 is HIGH when we are heating
 // pin 4 is HIGH when we are stable
 // pin 5 is HIGH when we enable temp servo control
-// pin 6 is the flickRGB i/o pin
+// pin 6 is HIGH is the flickRGB i/o pin
 // pin 7 is HIGH when we enable the COOL/OFF/HEAT servo
-// future:
-// pin 8 and 9 work together (binary add) to get blinkrate
-// pin 9=0, 8=1 Blinkrate = 1
-// pin 9=1, 8=0 Blinkrate = 2
-// pin 9=1, 8=1 Blinkrate = 3
-// pin 9 = 0 and 8 = 0 --> buzzer on
-// pin 10  - servo01
-// pin 11  - servo02
 
-int testrunPin = 2;
-int testrunval = 0;     // 0 means we are not running a test right now
+int onoffPin = 2;
+int onoffval = 0;     // is the machine on or off?
 int heatingPin = 3;
 int heatingval = 0;  // are we heating or cooling?
 int stablePin = 4;
-int stableval = 0;  // is the temp in the chamber stable?
+int stableval = 0;  // is the temp in the chamber stable
 int servopowerPin = 5;
 int servopowerval = 0; // should the servo be powered or not?
 
@@ -65,7 +57,6 @@ int greenval=0;
 
 int liteon = 0;
 int liteblink = 0;
-int blinkrate = 0; 
 
 int i = 1; 
 
@@ -85,7 +76,7 @@ int delayval = 1000; // delay for half a second
 
 void setup() 
 {
-  pinMode(testrunPin, INPUT);      // sets the digital pins as input
+  pinMode(onoffPin, INPUT);      // sets the digital pins as input
   pinMode(heatingPin , INPUT);     
   pinMode(stablePin, INPUT);      
   pinMode(servopowerPin, INPUT);
@@ -112,83 +103,78 @@ void loop()
  
  //read some input pins and do cool stuff based on the results
  
-   testrunval = digitalRead(testrunPin);   // read the input pins
+   onoffval = digitalRead(onoffPin);   // read the input pins
    heatingval = digitalRead(heatingPin);  // are we heating or cooling?
    stableval = digitalRead(stablePin);  // are we stable or not?
    servopowerval = digitalRead(servopowerPin);   // are we making a change?
    
     // We only have one flickRGB right now, so we don't need to worry about cycling through them 
-    //  for(int i=0;i<NUMPIXELS;i++)
+    //  for(int i=0;i<NUMPIXELS;i++){
       i=0;
    
    // uncomment for testing
-   //testrunval = 1;
+   //onoffval = 0;
    //stableval = 1;
-   //heatingval = 0;
-   //servopowerval = 1;
+   //heatingval = 1;
+   // servopowerval = 1;
    
-   if (testrunval == 0) {
-            redval = 200;
-            greenval = 200;
-            blueval = 200;   
-            blinkrate = 0; 
+   if (onoffval == 0) {
+     pixels.setPixelColor(i, pixels.Color(0,255,0));
+     pixels.show(); // This sends the updated pixel color to the hardware.
     }
     else {
       if (servopowerval == 1) {
-            redval = 255;
-            greenval = 180;
-            blueval = 0;   
-            blinkrate = 3; 
-          }
-        
+        for(int x=0;x<10;x++){    //blink yellow 5x to indicate change was commanded and servo will move
+           pixels.setPixelColor(i, pixels.Color(255,180,0));
+           pixels.show(); // This sends the updated pixel color to the hardware.
+           delay(delayval/3); // Delay for a period of time (in milliseconds).
+           pixels.setPixelColor(i, pixels.Color(0,0,0));
+           pixels.show(); // This sends the updated pixel color to the hardware.
+           delay(delayval/3); // Delay for a period of time (in milliseconds).
+        }
+      }
       else {
         if (stableval == 0 )
-          {
-          blinkrate = 1;  
-          // set the led color based on the value of heatingval
-          if (heatingval == 1) {
-            redval = 255;
-            greenval = 0;
-            blueval = 0;
-          }
-          else {
-            redval = 0;
-            greenval = 0;
-            blueval = 255;   
-
-           }
-          }
+        {
+          liteblink = 1;
+        }
         else
         {
-          // stable, so steady green
-          blinkrate = 0;
-          redval = 0;
-          greenval = 255;
-          blueval = 0;   
+          liteblink = 0;
         }   
         
-         } // end servopower check  
-
+        // set the led color based on the value of heatingval
+        if (heatingval == 1) {
+          redval = 255;
+          greenval = 0;
+          blueval = 0;
+        }
+        else {
+          redval = 0;
+          greenval = 0;
+          blueval = 255;   
+        }
+         
         // digitalWrite(pin, val);    // should we plan to write pins, or always let firmata set them?
          
         // pixels.Color takes RGB values, from 0,0,0 up to 255,255,255
         pixels.setPixelColor(i, pixels.Color(redval,greenval,blueval));
         pixels.show(); // This sends the updated pixel color to the hardware.
        
-        if (blinkrate == 0) {
+        if (liteblink == 0) {
             delay(delayval*2); // Delay for a period of time (in milliseconds).
          }
          else {
-          delay(delayval/blinkrate); // Delay for a period of time (in milliseconds).
+          delay(delayval); // Delay for a period of time (in milliseconds).
           pixels.setPixelColor(i, pixels.Color(0,0,0));
           pixels.show(); // This sends the updated pixel color to the hardware.
-          delay(delayval/blinkrate); // Delay for a period of time (in milliseconds).
+          delay(delayval); // Delay for a period of time (in milliseconds).
         }
-   // end onoff check
+
 
         //delay(delayval); // Delay for a period of time (in milliseconds).
 
         //end for loop for neopixel count
-      
-    }
+      }  // end servopower check  
+    }   // end onoff check
 }
