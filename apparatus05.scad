@@ -1,4 +1,7 @@
 //machine parts
+//backplane
+translate([-30, -8, 19]) cube([115,130,1.5]);
+
 translate([0, 0, 3]) cylinder(r=3.17, h=16.8, $fn=100);
 translate([0,0,15.1]) cylinder(r=7, h=4.7, $fn=100);
 
@@ -42,6 +45,7 @@ difference() {
 translate([-30, -8, 0]) cube([115,130,1.5]);
 translate([0, 0, -2]) cylinder(r=2.25, h=4, $fn=100);    
 } 
+
 
 
 translate([-30, -8, -14]) cube([115,130,1.5]);
