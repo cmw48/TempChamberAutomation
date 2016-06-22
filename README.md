@@ -22,7 +22,7 @@ Mission: read a temperature data point, and decide whether to
 </ul>
 <li> after you have been stable for an hour, do some shtuff:
 <ul><li> increment the step counter to say we are coing to the next level
-<li> turn a knob to turn the temp up to the next temperature step
+<li> turn a knob to turn the temp up to the next temperature step!
 <li> flip a switch from COOL to HEAT at one point (when we cross the room temp line)
 </ul>
 <li> detect that the temp is changing, and drop out of "stability lock"     
