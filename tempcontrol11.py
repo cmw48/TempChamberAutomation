@@ -22,7 +22,7 @@ import getopt
 from pyfirmata import Arduino, util
 
 try:
-    board = Arduino('/dev/ttyACM0', baudrate = 9600)
+    board = Arduino('/dev/ttyACM0', baudrate = 57600)
 except IOError as e:
     print "I/O error({0}): {1}".format(e.errno, e.strerror)
 except ValueError:
@@ -163,7 +163,7 @@ def on_message(client, userdata, msg):
           elif 0.1 < abs(sum(deltas)) <= .3:
             if isStable :
               isStable = False
-              board.digital[4].write(0)
+              board = Arduino('/dev/ttyUSB0', baudrate = 57600)
               stopStable = time.time() 
               startUnstable = time.time() 
               tempmsg = (str(recent_temps[9]) + "**NOT STABLE**" + str(sum(deltas)) + "   " + time.ctime(int(time.time())))
@@ -203,8 +203,8 @@ def main(argv):
     keepalive = 60
     port = 1883
     password = "mXtsGZB5"
-    topic = "/orgs/wd/aqe/temperature"
-    eggserial = "egg00802a84a8880130"
+    topic = "/orgs/wd/aqe/temperature/"
+    eggserial = "egg00802a548c180123"
     username = "wickeddevice"
     verbose = False
 
