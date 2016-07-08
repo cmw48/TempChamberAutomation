@@ -22,7 +22,7 @@ import getopt
 from pyfirmata import Arduino, util
 
 try:
-    board = Arduino('/dev/ttyUSB0', baudrate = 57600)
+    board = Arduino('/dev/ttyACM0', baudrate = 9600)
 except IOError as e:
     print "I/O error({0}): {1}".format(e.errno, e.strerror)
 except ValueError:
@@ -163,7 +163,7 @@ def on_message(client, userdata, msg):
           elif 0.1 < abs(sum(deltas)) <= .3:
             if isStable :
               isStable = False
-              board = Arduino('/dev/ttyUSB0', baudrate = 57600)
+              board.digital[4].write(0)
               stopStable = time.time() 
               startUnstable = time.time() 
               tempmsg = (str(recent_temps[9]) + "**NOT STABLE**" + str(sum(deltas)) + "   " + time.ctime(int(time.time())))
@@ -203,8 +203,8 @@ def main(argv):
     keepalive = 60
     port = 1883
     password = "mXtsGZB5"
-    topic = "/orgs/wd/aqe/temperature/"
-    eggserial = "egg00802a548c180123"
+    topic = "/orgs/wd/aqe/temperature"
+    eggserial = "egg00802a8490a0130"
     username = "wickeddevice"
     verbose = False
 
@@ -259,9 +259,8 @@ def main(argv):
     try:
         # change power flag to on
         board.digital[2].write(1)
-        print("test running, dummy.\n")
+        print("test running.\n")
         board.digital[5].write(1)
-        print("make with the blinky, dummy.\n")
         #start temp chamber run clock and set blvrun flag
         blvrun = 1
         startblvrun = time.time() 
@@ -275,7 +274,7 @@ def main(argv):
         client.username_pw_set("wickeddevice", "mXtsGZB5")
         client.connect("mqtt.opensensors.io")
 
-        client.subscribe("/orgs/wd/aqe/temperature/egg00802a84a8880130", qos=0)
+        client.subscribe("/orgs/wd/aqe/temperature/egg00802a8490a0130", qos=0)
 
         # message loop should be one of these (first two down't work for what we want)
         #client.loop_read()
@@ -301,9 +300,9 @@ def main(argv):
                 pass
             else: 
                 print("reconnecting...")
-                client.unsubscribe("/orgs/wd/aqe/temperature/egg00802a84a8880130")
+                client.unsubscribe("/orgs/wd/aqe/temperature/egg00802a8490a0130")
                 client.connect("mqtt.opensensors.io")
-                client.subscribe("/orgs/wd/aqe/temperature/egg00802a84a8880130", qos=0)            
+                client.subscribe("/orgs/wd/aqe/temperature/egg00802a8490a0130", qos=0)            
                 lastMessageTimeStamp = time.time()
                
     except KeyboardInterrupt: # If CTRL+C is pressed, exit cleanly:
@@ -313,7 +312,7 @@ def main(argv):
         board.digital[4].write(0)
         board.digital[2].write(0)
         client.loop_stop()
-        client.unsubscribe("/orgs/wd/aqe/temperature/egg00802a84a8880130")
+        client.unsubscribe("/orgs/wd/aqe/temperature/egg00802a8490a0130")
         json.dump(temp_record, f)
         f.close()
 
