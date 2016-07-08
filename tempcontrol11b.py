@@ -251,7 +251,7 @@ def main(argv):
         client.username_pw_set("wickeddevice", "mXtsGZB5")
         client.connect("mqtt.opensensors.io")
 
-        client.subscribe("/orgs/wd/aqe/temperature/egg00802a84a90a0130", qos=0)
+        client.subscribe("/orgs/wd/aqe/temperature/egg00802a548c180123", qos=0)
 
         # message loop should be one of these (first two down't work for what we want)
         #client.loop_read()
@@ -277,9 +277,9 @@ def main(argv):
                 pass
             else: 
                 print("reconnecting...")
-                client.unsubscribe("/orgs/wd/aqe/temperature/egg00802a84a90a0130")
+                client.unsubscribe("/orgs/wd/aqe/temperature/egg00802a548c180123")
                 client.connect("mqtt.opensensors.io")
-                client.subscribe("/orgs/wd/aqe/temperature/egg00802a84a90a0130", qos=0)            
+                client.subscribe("/orgs/wd/aqe/temperature/egg00802a548c180123", qos=0)            
                 lastMessageTimeStamp = time.time()
                
     except KeyboardInterrupt: # If CTRL+C is pressed, exit cleanly:
@@ -289,7 +289,7 @@ def main(argv):
         board.digital[4].write(0)
         board.digital[2].write(0)
         client.loop_stop()
-        client.unsubscribe("/orgs/wd/aqe/temperature/egg00802a84a90a0130")
+        client.unsubscribe("/orgs/wd/aqe/temperature/egg00802a548c180123")
         json.dump(temp_record, f)
         f.close()
 
