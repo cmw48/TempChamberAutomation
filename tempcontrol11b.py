@@ -90,7 +90,7 @@ def on_message(client, userdata, msg):
         msgAck = 1  
 
         #print(msg.topic+" "+str(msg.qos)+" "+str(msg.payload))    
-        #samplePayload m = {"serial-number":"egg008028c05e9b0152","converted-value":25.96,"converted-units":"degC","raw-value":25.96,"raw-instant-value":25.96,"raw-units":"degC","sensor-part-number":"SHT25"}
+        #samplePayload m = {"serial-number":"egg00802a548c180123","converted-value":25.96,"converted-units":"degC","raw-value":25.96,"raw-instant-value":25.96,"raw-units":"degC","sensor-part-number":"SHT25"}
         parsed_msg = json.loads(msg.payload)
         M.setmessage(parsed_msg)
         msgCount = msgCount + 1
@@ -251,7 +251,7 @@ def main(argv):
         client.username_pw_set("wickeddevice", "mXtsGZB5")
         client.connect("mqtt.opensensors.io")
 
-        client.subscribe("/orgs/wd/aqe/temperature/egg0080281a7b080150", qos=0)
+        client.subscribe("/orgs/wd/aqe/temperature/egg00802a548c180123", qos=0)
 
         # message loop should be one of these (first two down't work for what we want)
         #client.loop_read()
@@ -277,9 +277,9 @@ def main(argv):
                 pass
             else: 
                 print("reconnecting...")
-                client.unsubscribe("/orgs/wd/aqe/temperature/egg0080281a7b080150")
+                client.unsubscribe("/orgs/wd/aqe/temperature/egg00802a548c180123")
                 client.connect("mqtt.opensensors.io")
-                client.subscribe("/orgs/wd/aqe/temperature/egg0080281a7b080150", qos=0)            
+                client.subscribe("/orgs/wd/aqe/temperature/egg00802a548c180123", qos=0)            
                 lastMessageTimeStamp = time.time()
                
     except KeyboardInterrupt: # If CTRL+C is pressed, exit cleanly:
@@ -289,7 +289,7 @@ def main(argv):
         board.digital[4].write(0)
         board.digital[2].write(0)
         client.loop_stop()
-        client.unsubscribe("/orgs/wd/aqe/temperature/egg0080281a7b080150")
+        client.unsubscribe("/orgs/wd/aqe/temperature/egg00802a548c180123")
         json.dump(temp_record, f)
         f.close()
 

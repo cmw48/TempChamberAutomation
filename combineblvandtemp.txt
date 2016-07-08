@@ -1,0 +1,34 @@
+tested temp and hum with Oregon Sci unit for 10 min at near room temp.
+
+COOL to 23C in the box gets you about 25C in the in the egg.
+
+Open the door, hum stable at 20-19.5 JUMPS to 39% when door is opened.
+
+Insert OregonSci unit.
+
+Wait 10 minutes: 
+
+humidity drops from 39 to 29% at a rate of roughly 1% per minute
+at 12 minutes, hum is stablizing drop 1% over 3 mins
+Open door at 12:18 (humidity jumps to 38% again)
+mark temp on OregonSci at 74.3F
+mark hum on OregonSci at 40%
+
+Change box temp to 40c at 12:20
+insert Oregonsci unit and nist therm
+stability lock at 12:56 - 41.0C in egg, 38.9C on nisttherm
+
+plan is to run eggs stable for 2 hours. 
+check nisttherm and oregonsci immediately after opening box and mark temp and hum
+do blv and temphum calculations at the same time
+
+recorded temp in egg at 7/8 2:15 was 41.21c
+nistthrem said 39.31
+oregonsci said 102.7 and 38% hum
+
+let eggs run an additional 5 minutes 
+at 2:20 begin downloads
+
+
+
+
