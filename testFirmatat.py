@@ -177,33 +177,32 @@ def on_message(client, userdata, msg):
 def main(argv):
 
 
-    /**
-    //pin assignments
-    // pin 0 is rx , pin 1 is tx
-    // pin 2 is HIGH when test is running, low when warming up
-    // pin 3 is HIGH when we are heating
-    // pin 4 is HIGH when we are stable
-    // pin 5 is HIGH when we enable temp servo control
-    // pin 6 is the flickRGB i/o pin
-    // pin 7 is HIGH when we enable the COOL/OFF/HEAT servo
-    // future:
-    // pin 8 and 9 work together (binary add) to get blinkrate
-    // pin 9=0, 8=1 Blinkrate = 1
-    // pin 9=1, 8=0 Blinkrate = 2
-    // pin 9=1, 8=1 Blinkrate = 3
-    // pin 9 = 0 and 8 = 0 --> buzzer on
-    // pin 10  - servo01
-    // pin 11  - servo02
+    #
+    #pin assignments
+    # pin 0 is rx , pin 1 is tx
+    # pin 2 is HIGH when test is running, low when warming up
+    # pin 3 is HIGH when we are heating
+    # pin 4 is HIGH when we are stable
+    # pin 5 is HIGH when we enable temp servo control
+    # pin 6 is the flickRGB i/o pin
+    # pin 7 is HIGH when we enable the COOL/OFF/HEAT servo
+    # future:
+    # pin 8 and 9 work together (binary add) to get blinkrate
+    # pin 9=0, 8=1 Blinkrate = 1
+    # pin 9=1, 8=0 Blinkrate = 2
+    # pin 9=1, 8=1 Blinkrate = 3
+    # pin 9 = 0 and 8 = 0 --> buzzer on
+    # pin 10  - servo01
+    # pin 11  - servo02
 
-    //int testrunPin = 2;
-    //int testrunval = 0;     // 0 means we are not running a test right now
-    //int heatingPin = 3;
-    //int heatingval = 0;     // are we heating or cooling?
-    //int stablePin = 4;
-    //int stableval = 0;      // is the temp in the chamber stable?
-    //int servopowerPin = 5;
-    //int servopowerval = 0;  // should the servo be powered or not?
-    **/
+    #int testrunPin = 2;
+    #int testrunval = 0;     // 0 means we are not running a test right now
+    #int heatingPin = 3;
+    #int heatingval = 0;     // are we heating or cooling?
+    #int stablePin = 4;
+    #int stableval = 0;      // is the temp in the chamber stable?
+    #int servopowerPin = 5;
+    #int servopowerval = 0;  // should the servo be powered or not?
 
 
     try:
