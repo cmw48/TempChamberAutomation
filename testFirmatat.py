@@ -206,7 +206,7 @@ def main(argv):
 
 
     try:
-        while 1 == 1 {
+        while 1 == 1:
             board.digital[2].write(1)
             board.digital[3].write(1)
             board.digital[4].write(1)
@@ -219,8 +219,7 @@ def main(argv):
             board.digital[3].write(1)
             board.digital[4].write(0)
             time.sleep(3)
-        }
-          
+
     except KeyboardInterrupt: # If CTRL+C is pressed, exit cleanly:
         # change power flag to off
         # change arduino LED to green
