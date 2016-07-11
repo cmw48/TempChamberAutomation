@@ -134,61 +134,56 @@ void loop()
             blinkrate = 0; 
     }
     else {
-      if (servopowerval == 1) {
+        if (servopowerval == 1) {
             redval = 255;
             greenval = 180;
             blueval = 0;   
             blinkrate = 3; 
           }
-        
-      else {
-        if (stableval == 0 )
-          {
-          blinkrate = 1;  
-          // set the led color based on the value of heatingval
-          if (heatingval == 1) {
-            redval = 255;
-            greenval = 0;
-            blueval = 0;
-          }
-          else {
-            redval = 0;
-            greenval = 0;
-            blueval = 255;   
-
+        else {
+          if (stableval == 0 ) {
+            blinkrate = 1;  
+            // set the led color based on the value of heatingval
+            if (heatingval == 1) {
+              redval = 255;
+              greenval = 0;
+              blueval = 0;
+            }
+            else {
+              redval = 0;
+              greenval = 0;
+              blueval = 255;   
            }
           }
-        else
-        {
-          // stable, so steady green
-          blinkrate = 0;
-          redval = 0;
-          greenval = 255;
-          blueval = 0;   
-        }   
-        
-         } // end servopower check  
+          else {
+            // stable, so steady green
+            blinkrate = 0;
+            redval = 0;
+            greenval = 255;
+            blueval = 0;   
+          }
+        }  // end stability check
+    } // end servopower check  
 
-        // digitalWrite(pin, val);    // should we plan to write pins, or always let firmata set them?
-         
-        // pixels.Color takes RGB values, from 0,0,0 up to 255,255,255
-        pixels.setPixelColor(i, pixels.Color(redval,greenval,blueval));
-        pixels.show(); // This sends the updated pixel color to the hardware.
-       
-        if (blinkrate == 0) {
-            delay(delayval); // Delay for a period of time (in milliseconds).
-         }
-         else {
-          delay(delayval/(blinkrate+1)); // Delay for a period of time (in milliseconds).
-          pixels.setPixelColor(i, pixels.Color(0,0,0));
-          pixels.show(); // This sends the updated pixel color to the hardware.
-          delay(delayval/(blinkrate+1)); // Delay for a period of time (in milliseconds).
-        }
+    // digitalWrite(pin, val);    // should we plan to write pins, or always let firmata set them?
+
+    // pixels.Color takes RGB values, from 0,0,0 up to 255,255,255
+    pixels.setPixelColor(i, pixels.Color(redval,greenval,blueval));
+    pixels.show(); // This sends the updated pixel color to the hardware.
+    if (blinkrate == 0) {
+        delay(delayval); // Delay for a period of time (in milliseconds).
+    }
+    else {
+      delay(delayval/(blinkrate+1)); // Delay for a period of time (in milliseconds).
+      pixels.setPixelColor(i, pixels.Color(0,0,0));
+      pixels.show(); // This sends the updated pixel color to the hardware.
+      delay(delayval/(blinkrate+1)); // Delay for a period of time (in milliseconds).
+    }
    // end onoff check
 
-        //delay(delayval); // Delay for a period of time (in milliseconds).
+    //delay(delayval); // Delay for a period of time (in milliseconds).
 
-        //end for loop for neopixel count
-      
-    }
-}
+    //end for loop for neopixel count
+
+}  // end main loop
+
