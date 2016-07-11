@@ -21,7 +21,7 @@
 #include <Firmata.h>
 #include <Adafruit_NeoPixel.h>
 #ifdef __AVR__
-  #include <avr/power.h>
+#include <avr/power.h>
 #endif
 
 Servo servos[MAX_SERVOS];
@@ -53,11 +53,11 @@ void analogWriteCallback(byte pin, int value)
 int testrunPin = 2;
 int testrunval = 0;     // 0 means we are not running a test right now
 int heatingPin = 3;
-int heatingval = 0;  // are we heating or cooling?
+int heatingval = 0;     // are we heating or cooling?
 int stablePin = 4;
-int stableval = 0;  // is the temp in the chamber stable?
+int stableval = 0;      // is the temp in the chamber stable?
 int servopowerPin = 5;
-int servopowerval = 0; // should the servo be powered or not?
+int servopowerval = 0;  // should the servo be powered or not?
 
 int redval = 0;
 int blueval = 0; 
@@ -176,13 +176,13 @@ void loop()
         pixels.show(); // This sends the updated pixel color to the hardware.
        
         if (blinkrate == 0) {
-            delay(delayval*2); // Delay for a period of time (in milliseconds).
+            delay(delayval); // Delay for a period of time (in milliseconds).
          }
          else {
-          delay(delayval/blinkrate); // Delay for a period of time (in milliseconds).
+          delay(delayval/(blinkrate+1)); // Delay for a period of time (in milliseconds).
           pixels.setPixelColor(i, pixels.Color(0,0,0));
           pixels.show(); // This sends the updated pixel color to the hardware.
-          delay(delayval/blinkrate); // Delay for a period of time (in milliseconds).
+          delay(delayval/(blinkrate+1)); // Delay for a period of time (in milliseconds).
         }
    // end onoff check
 
