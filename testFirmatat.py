@@ -206,7 +206,7 @@ def main(argv):
 
 
     try:
-        while 1=1 {
+        while 1 == 1 {
             board.digital[2].write(1)
             board.digital[3].write(1)
             board.digital[4].write(1)
