@@ -183,6 +183,7 @@ def main(argv):
     port = 1883
     password = "mXtsGZB5"
     topic = "/orgs/wd/aqe/temperature/"
+    eggserial = "egg00802a548c180123"
     username = "wickeddevice"
     verbose = False
 
@@ -225,7 +226,8 @@ def main(argv):
     global lastMessageTimeStamp
     ##MAIN EXECUTION STARTS HERE##
     # TODO: consider this should be a "main" function or __init__ or what the heck?
-
+    subscription = topic + eggserial
+    
     M = MQTT_Message() 
     print("Here we go! Press CTRL+C to exit")
     # reset timers and counts
@@ -251,7 +253,7 @@ def main(argv):
         client.username_pw_set("wickeddevice", "mXtsGZB5")
         client.connect("mqtt.opensensors.io")
 
-        client.subscribe("/orgs/wd/aqe/temperature/egg00802a548c180123", qos=0)
+        client.subscribe(subscription, qos=0)
 
         # message loop should be one of these (first two down't work for what we want)
         #client.loop_read()
@@ -277,9 +279,9 @@ def main(argv):
                 pass
             else: 
                 print("reconnecting...")
-                client.unsubscribe("/orgs/wd/aqe/temperature/egg00802a548c180123")
+                client.unsubscribe(subscription)
                 client.connect("mqtt.opensensors.io")
-                client.subscribe("/orgs/wd/aqe/temperature/egg00802a548c180123", qos=0)            
+                client.subscribe(subscription, qos=0)            
                 lastMessageTimeStamp = time.time()
                
     except KeyboardInterrupt: # If CTRL+C is pressed, exit cleanly:
@@ -289,7 +291,7 @@ def main(argv):
         board.digital[4].write(0)
         board.digital[2].write(0)
         client.loop_stop()
-        client.unsubscribe("/orgs/wd/aqe/temperature/egg00802a548c180123")
+        client.unsubscribe(subscription)
         json.dump(temp_record, f)
         f.close()
 
