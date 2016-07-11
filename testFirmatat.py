@@ -211,17 +211,17 @@ def main(argv):
             board.digital[2].write(1)
             board.digital[3].write(1)
             board.digital[4].write(1)
-            time.sleep(3)
+            time.sleep(30)
             print("two")
             board.digital[2].write(1)
             board.digital[3].write(0)
             board.digital[4].write(0)
-            time.sleep(3)
+            time.sleep(30)
             print("three")
             board.digital[2].write(1)
             board.digital[3].write(1)
             board.digital[4].write(0)
-            time.sleep(3)
+            time.sleep(30)
 
     except KeyboardInterrupt: # If CTRL+C is pressed, exit cleanly:
         # change power flag to off
