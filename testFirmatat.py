@@ -176,6 +176,8 @@ def on_message(client, userdata, msg):
 
 def main(argv):
 
+
+/*
 //pin assignments
 // pin 0 is rx , pin 1 is tx
 // pin 2 is HIGH when test is running, low when warming up
@@ -201,6 +203,8 @@ def main(argv):
 //int stableval = 0;      // is the temp in the chamber stable?
 //int servopowerPin = 5;
 //int servopowerval = 0;  // should the servo be powered or not?
+*/
+
 
     try:
         while 1=1 {
