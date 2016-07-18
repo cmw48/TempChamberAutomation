@@ -183,7 +183,7 @@ def main(argv):
     port = 1883
     password = "mXtsGZB5"
     topic = "/orgs/wd/aqe/temperature/"
-    eggserial = "egg00802f09f2880140"
+    eggserial = "egg00802f4c68980141"
     username = "wickeddevice"
     verbose = False
 
