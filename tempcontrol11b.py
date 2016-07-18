@@ -183,12 +183,12 @@ def main(argv):
     port = 1883
     password = "mXtsGZB5"
     topic = "/orgs/wd/aqe/temperature/"
-    eggserial = "egg00802a548c180123"
+    eggserial = "egg00802f09f2880140"
     username = "wickeddevice"
     verbose = False
 
     try:
-        opts, args = getopt.getopt(argv, "dh:i:k:p:P:t:u:v", ["debug", "id", "keepalive", "port", "password", "topic", "username", "verbose"])
+        opts, args = getopt.getopt(argv, "d:h:e:i:k:p:P:t:u:v", ["debug", "host", "eggserial", "id", "keepalive", "port", "password", "topic", "username", "verbose"])
     except getopt.GetoptError as s:
         print_usage()
         sys.exit(2)
@@ -197,6 +197,8 @@ def main(argv):
             debug = True
         elif opt in ("-h", "--host"):
             host = arg
+        elif opt in ("-e", "--eggserial"):
+            eggserial = arg
         elif opt in ("-i", "--id"):
             client_id = arg
         elif opt in ("-k", "--keepalive"):
