@@ -16,6 +16,8 @@ for p in ports:
 
    while int1 < 99:   # Loop checks "COM0" to "COM98" for Adruino Port Info. 
 
+      print p
+
       if "CH340" in p[1]:  # Looks for "CH340" in P[1].
             str2 = str(int1) # Converts an Integer to a String, allowing:
             str1 = "COM" + str2 # add the strings together.
