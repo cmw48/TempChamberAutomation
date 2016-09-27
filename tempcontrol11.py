@@ -275,7 +275,7 @@ def main(argv):
         client.username_pw_set("wickeddevice", "mXtsGZB5")
         client.connect("mqtt.opensensors.io")
 
-        client.subscribe("/orgs/wd/aqe/temperature/egg008028ee01980111", qos=0)
+        client.subscribe("/orgs/wd/aqe/temperature/egg00802ea36e980133", qos=0)
 
         # message loop should be one of these (first two down't work for what we want)
         #client.loop_read()
