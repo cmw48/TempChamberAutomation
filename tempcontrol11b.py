@@ -32,7 +32,7 @@ except:
     print "Unexpected errorC:", sys.exc_info()[0]
 
 #board = Arduino('/dev/ttyACM0')
-#board = Arduino('/dev/ttyUSB0')
+board = Arduino('/dev/ttyUSB0')
 
 #declare a global list of temps
 recent_temps=[]
