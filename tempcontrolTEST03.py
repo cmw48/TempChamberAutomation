@@ -1,4 +1,4 @@
-#!/usr/bin/python 
+    #!/usr/bin/python 
 # but not that python, use Anaconda
 #
 # Copyright (c) 2016 Chris Westling <cmwestling@gmail.com>
