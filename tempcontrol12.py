@@ -189,9 +189,9 @@ def on_message(client, userdata, msg):
 def tick():
     s = time.strftime('%H:%M:%S')
     if s != clock["text"]:
-		clock["text"] = s
+        clock["text"] = s
     clock.after(200, tick)
-	
+
 def main(argv):
 
     debug = False
@@ -283,7 +283,7 @@ def main(argv):
         while blvrun: 
             #get one message (and do a buncha stuff in that function)
             client.on_message = on_message
-			# will this work?
+            # will this work?
             time.sleep(5)
             # advance counts and clocks
             elapsedruntime = (time.strftime("%H:%M:%S", time.gmtime(time.time() - startblvrun)))
@@ -293,16 +293,16 @@ def main(argv):
             if elapsedruntime == prevelapsedruntime:
                 pass
             else:
-			    print('current temp:  ' + str(M.tempc) + "   msgs recieved:  " + str(msgCount) + "   time since last msg:  " + timeSinceLastMessage + "   total run time:  " + elapsedruntime)
-			root = Tk()
-			clock = Label(root, font=('times', 20, 'bold'), bg='green')
-			clock.pack(fill=BOTH, expand=1)	
-			tick()
-			#root.mainloop()
-			root.update_idletasks()
-			root.update()
-				
-			prevelapsedruntime = elapsedruntime
+                print('current temp:  ' + str(M.tempc) + "   msgs recieved:  " + str(msgCount) + "   time since last msg:  " + timeSinceLastMessage + "   total run time:  " + elapsedruntime)
+            root = Tk()
+            clock = Label(root, font=('times', 20, 'bold'), bg='green')
+            clock.pack(fill=BOTH, expand=1)	
+            tick()
+            #root.mainloop()
+            root.update_idletasks()
+            root.update()
+
+            prevelapsedruntime = elapsedruntime
             # reset message flag
             if (time.time() - lastMessageTimeStamp) < 40 :
                 pass
