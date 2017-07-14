@@ -101,7 +101,7 @@ def on_message(client, userdata, msg):
         msgAck = 1  
 
         #print(msg.topic+" "+str(msg.qos)+" "+str(msg.payload))    
-        #samplePayload m = {"serial-number":"egg00802a548c180123","converted-value":25.96,"converted-units":"degC","raw-value":25.96,"raw-instant-value":25.96,"raw-units":"degC","sensor-part-number":"SHT25"}
+        #samplePayload m = {"serial-number":"egg00802d94e5080102","converted-value":25.96,"converted-units":"degC","raw-value":25.96,"raw-instant-value":25.96,"raw-units":"degC","sensor-part-number":"SHT25"}
         parsed_msg = json.loads(msg.payload)
         M.setmessage(parsed_msg)
         msgCount = msgCount + 1
@@ -194,7 +194,7 @@ def main(argv):
     port = 1883
     password = "mXtsGZB5"
     topic = "/orgs/wd/aqe/temperature/"
-    eggserial = "egg0080301531980121"
+    eggserial = "egg00802d94e5080102"
     username = "wickeddevice"
     verbose = False
 
