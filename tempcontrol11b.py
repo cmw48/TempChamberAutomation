@@ -22,8 +22,8 @@ import getopt
 from pyfirmata import Arduino, util
 
 try:
-    #board = Arduino('/dev/ttyACM0', baudrate = 9600)
-    board = Arduino('/dev/ttyUSB0', baudrate = 9600)
+    board = Arduino('/dev/ttyACM0', baudrate = 9600)
+    #board = Arduino('/dev/ttyUSB0', baudrate = 9600)
 except IOError as e:
     print "I/O error({0}): {1}".format(e.errno, e.strerror)
 except ValueError:
@@ -31,8 +31,8 @@ except ValueError:
 except:
     print "Unexpected errorC:", sys.exc_info()[0]
 
-#board = Arduino('/dev/ttyACM0')
-board = Arduino('/dev/ttyUSB0')
+board = Arduino('/dev/ttyACM0')
+#board = Arduino('/dev/ttyUSB0')
 
 #declare a global list of temps
 recent_temps=[]
@@ -276,7 +276,8 @@ def main(argv):
         while blvrun: 
             #get one message (and do a buncha stuff in that function)
             client.on_message = on_message
-      
+			# will this work?
+            time.sleep(5)
             # advance counts and clocks
             elapsedruntime = (time.strftime("%H:%M:%S", time.gmtime(time.time() - startblvrun)))
             timeSinceLastMessage = (time.strftime("%H:%M:%S", time.gmtime(time.time() - lastMessageTimeStamp)))

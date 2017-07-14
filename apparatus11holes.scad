@@ -235,7 +235,7 @@ inShaft = 20;
 inShaftDiameter = 5.4; //5
 
 outShaft = 13;
-outShaftDiameter = 6.7; //6.3
+outShaftDiameter = 12; //6.3
 
 inShaftLength = inShaft + spaceBetween;
 outShaftLength = outShaft + spaceBetween;
