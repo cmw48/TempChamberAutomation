@@ -186,12 +186,6 @@ def on_message(client, userdata, msg):
       print "Unexpected error:", sys.exc_info()[0]
       #raise
 
-def tick():
-    s = time.strftime('%H:%M:%S')
-    if s != clock["text"]:
-        clock["text"] = s
-    clock.after(200, tick)
-
 def main(argv):
 
     debug = False
@@ -294,6 +288,11 @@ def main(argv):
                 pass
             else:
                 print('current temp:  ' + str(M.tempc) + "   msgs recieved:  " + str(msgCount) + "   time since last msg:  " + timeSinceLastMessage + "   total run time:  " + elapsedruntime)
+            def tick():
+                s = time.strftime('%H:%M:%S')
+                if s != clock["text"]:
+                    clock["text"] = s
+                clock.after(200, tick)
             root = Tk()
             clock = Label(root, font=('times', 20, 'bold'), bg='green')
             clock.pack(fill=BOTH, expand=1)	
