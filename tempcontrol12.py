@@ -292,7 +292,7 @@ def main(argv):
             def tick():
                 s = time.strftime('%H:%M:%S')
                 if s != clock["text"]:
-                clock["text"] = s
+					clock["text"] = s
                 clock.after(200, tick)
 				
 			root = Tk()
