@@ -1,0 +1,16 @@
+{
+  "name": "jfive",
+  "version": "1.0.0",
+  "description": "tempcontrol and firmata testing",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "author": "Chris Westling",
+  "license": "ISC",
+  "dependencies": {
+    "johnny-five": "0.11.3",
+    "serialport": "4.0.7",
+  }
+}
