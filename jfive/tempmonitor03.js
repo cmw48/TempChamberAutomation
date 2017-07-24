@@ -1,10 +1,10 @@
 // tempmonitor.js
 
-//const {promisify} = require('util');
+const {promisify} = require('util');
 const mqtt = require('mqtt');
 var typeOf = require('typeof');
 
-//const getTemp = promisify(getEggTemp());
+const getTemp = promisify(getEggTemp());
 
 var currentTemp = '';
 var connected = false;
@@ -12,14 +12,6 @@ var topic = '/orgs/wd/aqe/temperature/';
 var eggserial = 'egg0080228ba6080140';
 var topicString = topic + eggserial;
 console.log('topic string %s', topicString);
-var msgcount = 0;
-
-var targetTempArray = [0,15,25,30,35,40];
-var recentTempArray=[];
-var tempRecordArray=[];
-var deltasArray=[];
-
-
 
 var client  = mqtt.connect('mqtt://mqtt.opensensors.io',{
   username: 'wickeddevice',
@@ -27,17 +19,6 @@ var client  = mqtt.connect('mqtt://mqtt.opensensors.io',{
   clientId: '2940'
 
 });
-if (process.platform === "win32") {
-  var rl = require("readline").createInterface({
-    input: process.stdin,
-    output: process.stdout
-  });
-
-  rl.on("SIGINT", function () {
-    process.emit("SIGINT");
-  });
-}
-
 
 client.on('message', function (topic, message) {
   // message is Buffer
@@ -46,18 +27,15 @@ client.on('message', function (topic, message) {
   var targetTemp = 0;
   var tempRightNow = getEggTemp(message, targetTemp);
   console.log('right now the egg temp is %s', tempRightNow);
-  msgcount++;
-  console.log(JSON.parse(message));
-   console.log('%s messages', msgcount);
+  //console.log(JSON.parse(message));
   //let json = JSON.parse(message);
   //console.log(json['converted-value']);
-  //client.end();
+  client.end();
 });
 
 
 client.on('connect', () => {
   client.subscribe(topicString);
-  var msgcount = 0;
 });
 
 function getEggTemp (message, targetTemp) {
@@ -72,14 +50,7 @@ function getEggTemp (message, targetTemp) {
   return currentTemp;
 };
 
-/*
-console.log('For loop should give us five messages');
-for(var i = 0; i < 5; i++) {
 
- console.log(msgcount);
- client.end();
-}
-*/
 /**
 getTemp(message, targetTemp)
   .then((text) => {
@@ -152,12 +123,3 @@ setTimeout(() => {
 }, 3600000)
 
 **/
-
-
-process.on("SIGINT", function () {
-  //graceful shutdown
-  console.log('received CTRL-C SIGINT, shutting down...');
-  client.end();
-  console.log('closed connection to client.');
-  process.exit();
-});

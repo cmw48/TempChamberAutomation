@@ -48,44 +48,44 @@ client.on('message', (topic, message) => {
   console.log('No handler for topic %s', topic)
 })
 
-function handleGarageConnected (message) {
-  console.log('garage connected status %s', message)
+function handleTestRunning (message) {
+  console.log('Test in progress status %s', message)
   connected = (message.toString() === 'true')
 }
 
-function handleGarageState (message) {
-  garageState = message
-  console.log('garage state update to %s', message)
+function handleStableState (message) {
+  stableState = message
+  console.log('stable state update to %s', message)
 }
 
-function openGarageDoor () {
-  // can only open door if we're connected to mqtt and door isn't already open
-  if (connected && garageState !== 'open') {
-    // Ask the door to open
-    client.publish('garage/open', 'true')
+function seekTemperature () {
+  // if unstable, we are trying to reach a temp
+  if (connected && stableState !== 'stable') {
+    // what is the currentTemp vs targetTemp
+    // code to monitor for stability
   }
 }
 
-function closeGarageDoor () {
-  // can only close door if we're connected to mqtt and door isn't already closed
-  if (connected && garageState !== 'closed') {
-    // Ask the door to close
-    client.publish('garage/close', 'true')
+function holdTemperature () {
+  // if stable, we need to stay that way for one hour
+  if (connected && stableState !== 'unstable') {
+    // how much time has elapsed since stability lockup
+    // code to count off one hour
   }
 }
 
-// --- For Demo Purposes Only ----//
+/**
 
 // simulate opening garage door
 setTimeout(() => {
-  console.log('open door')
-  openGarageDoor()
+  console.log('pause until next temp message')
+  getTemp()
 }, 5000)
 
 // simulate closing garage door
 setTimeout(() => {
-  console.log('close door')
-  closeGarageDoor()
-}, 20000)
+  console.log('count off one hour from stability lockup')
+  holdTime()
+}, 3600000)
 
 **/
