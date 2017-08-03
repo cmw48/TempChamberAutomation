@@ -12,7 +12,7 @@ var client  = mqtt.connect('mqtt://mqtt.opensensors.io',{
 var currentTemp = ''
 var connected = false
 var topic = '/orgs/wd/aqe/temperature/'
-var eggserial = 'egg00802d94e5080102'
+var eggserial = 'egg00802294f10b0142'
 var topicString = topic + eggserial
 console.log('topic string %s', topicString)
 

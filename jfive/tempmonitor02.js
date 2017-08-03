@@ -9,7 +9,7 @@ var typeOf = require('typeof');
 var currentTemp = '';
 var connected = false;
 var topic = '/orgs/wd/aqe/temperature/';
-var eggserial = 'egg0080228ba6080140';
+var eggserial = 'egg00802294f10b0142';
 var topicString = topic + eggserial;
 console.log('topic string %s', topicString);
 var msgcount = 0;
