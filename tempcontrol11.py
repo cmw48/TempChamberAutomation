@@ -204,7 +204,7 @@ def main(argv):
     port = 1883
     password = "mXtsGZB5"
     topic = "/orgs/wd/aqe/temperature"
-    eggserial = "egg00802a84a8880130"
+    eggserial = "egg00802294f10b0142"
     username = "wickeddevice"
     verbose = False
 
@@ -275,7 +275,7 @@ def main(argv):
         client.username_pw_set("wickeddevice", "mXtsGZB5")
         client.connect("mqtt.opensensors.io")
 
-        client.subscribe("/orgs/wd/aqe/temperature/egg00802a84a8880130", qos=0)
+        client.subscribe("/orgs/wd/aqe/temperature/egg00802294f10b0142", qos=0)
 
         # message loop should be one of these (first two down't work for what we want)
         #client.loop_read()
@@ -297,13 +297,13 @@ def main(argv):
                 print('current temp:  ' + str(M.tempc) + "   msgs recieved:  " + str(msgCount) + "   time since last msg:  " + timeSinceLastMessage + "   total run time:  " + elapsedruntime)
             prevelapsedruntime = elapsedruntime
             # reset message flag
-            if (time.time() - lastMessageTimeStamp) < 20 :
+            if (time.time() - lastMessageTimeStamp) < 90 :
                 pass
             else: 
                 print("reconnecting...")
-                client.unsubscribe("/orgs/wd/aqe/temperature/egg00802a84a8880130")
+                client.unsubscribe("/orgs/wd/aqe/temperature/egg00802294f10b0142")
                 client.connect("mqtt.opensensors.io")
-                client.subscribe("/orgs/wd/aqe/temperature/egg00802a84a8880130", qos=0)            
+                client.subscribe("/orgs/wd/aqe/temperature/egg00802294f10b0142", qos=0)            
                 lastMessageTimeStamp = time.time()
                
     except KeyboardInterrupt: # If CTRL+C is pressed, exit cleanly:
@@ -313,7 +313,7 @@ def main(argv):
         board.digital[4].write(0)
         board.digital[2].write(0)
         client.loop_stop()
-        client.unsubscribe("/orgs/wd/aqe/temperature/egg00802a84a8880130")
+        client.unsubscribe("/orgs/wd/aqe/temperature/egg00802294f10b0142")
         json.dump(temp_record, f)
         f.close()
 
