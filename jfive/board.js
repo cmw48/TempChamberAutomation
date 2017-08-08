@@ -8,5 +8,9 @@ board.on("ready", function() {
 
   // "blink" the led in 500ms
   // on-off phase periods
-  led.blink(2500);
+  led.blink(500);
 });
+
+board.on("error", (err) => {
+  console.log("Error", err.message, err.stack, err);
+})

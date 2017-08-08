@@ -1,5 +1,8 @@
 // tempmonitor.js
 
+//in future, use OS api to do this:
+//curl -X GET --header "Accept: application/json" --header "Authorization: api-key 0da5ed67-fccc-4be6-b7e0-1bab9bb670f1" "https://api.opensensors.io/v1/messages/topic/%2Forgs%2Fwd%2Faqe%2Ftemperature%2Fegg00802294f10b0142"
+
 //const {promisify} = require('util');
 const mqtt = require('mqtt');
 var typeOf = require('typeof');
@@ -71,6 +74,23 @@ function getEggTemp (message, targetTemp) {
   //connected = (message.toString() === 'true')
   return currentTemp;
 };
+
+console.log('assuming that starting temperature is stable at 0C');
+
+// begin run
+//  connect to a test egg in the chamber and get MQTT temperature
+//  set temp to 0C and wait for stability
+//  goal is to proceed through 5 temperature steps, 15, 25, 30, 35, 40
+//  for each step, monitor when the temperature reaches stability (as defined below)
+//  once stability is achieved, run for two hours, then go to next steps
+//  if units lose stability during the two hours, wait for stability, then restart the step run clock
+//  when done with 40C, we should use a sixth step to back off a few degrees (or power off temp chamber)
+//  end run
+// failsafes: if temp reaches -10 or +45, drop power to temp chamber
+// future: monitor other eggs under test to ensure connectivity and temp parity with test egg
+
+for(var i = 0; i < 5; i++) {
+
 
 /*
 console.log('For loop should give us five messages');

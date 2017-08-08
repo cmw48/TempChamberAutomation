@@ -21,8 +21,8 @@ ServoFirmata servo;
 #include <StepperFirmata.h>
 StepperFirmata stepper;
 
-#include <WickedMotorShield.h>
-WickedMotorShield wmotor;
+//#include <WickedMotorShield.h>
+//WickedMotorShield wmotor;
 
 
 #include <SerialFirmata.h>
@@ -41,6 +41,12 @@ FirmataExt firmataExt;
 
 #include <FirmataReporting.h>
 FirmataReporting reporting;
+
+#include <AFMotor.h>
+
+// Connect a stepper motor with 200 steps per revolution 
+// to motor port #1 (M1 and M2)
+AF_Stepper motor(200, 1);
 
 void systemResetCallback()
 {
@@ -86,21 +92,45 @@ void setup()
   initTransport();
 
   systemResetCallback();
+
+  Serial.begin(57600);           // set up Serial library at 9600 bps
+  Serial.println("Stepper test!");
+
+  motor.setSpeed(10);  // 10 rpm  
 }
 
 void loop()
 {
+
   digitalInput.report();
 
   while(Firmata.available()) {
     Firmata.processInput();
     if (!Firmata.isParsingMessage()) {
-      goto runtasks;
+      
+    Serial.println("Single coil steps");
+    motor.step(100, FORWARD, SINGLE); 
+    motor.step(100, BACKWARD, SINGLE); 
+
+    Serial.println("Double coil steps");
+    motor.step(100, FORWARD, DOUBLE); 
+    motor.step(100, BACKWARD, DOUBLE);
+
+    Serial.println("Interleave coil steps");
+    motor.step(100, FORWARD, INTERLEAVE); 
+    motor.step(100, BACKWARD, INTERLEAVE); 
+
+   Serial.println("Micrsostep steps");
+    motor.step(100, FORWARD, MICROSTEP); 
+    motor.step(100, BACKWARD, MICROSTEP); 
+      
+      
+      //goto runtasks;
     }
   }
-  if (!Firmata.isParsingMessage()) {
-runtasks: scheduler.runTasks();
-  }
+  //if (!Firmata.isParsingMessage()) {
+//runtasks: scheduler.runTasks();
+  //}
 
   if (reporting.elapsed()) {
     analogInput.report();
