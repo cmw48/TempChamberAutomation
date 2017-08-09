@@ -198,7 +198,8 @@ def on_message(client, userdata, msg):
 def main(argv):
 
     debug = False
-    host = "mqtt.opensensors.io"
+    #host = "mqtt.opensensors.io"
+    host = "192.168.1.31"
     client_id = 2940
     keepalive = 60
     port = 1883
@@ -302,7 +303,8 @@ def main(argv):
             else: 
                 print("reconnecting...")
                 client.unsubscribe("/orgs/wd/aqe/temperature/egg00802294f10b0142")
-                client.connect("mqtt.opensensors.io")
+                #client.connect("mqtt.opensensors.io")
+                client.connect("192.168.1.31")
                 client.subscribe("/orgs/wd/aqe/temperature/egg00802294f10b0142", qos=0)            
                 lastMessageTimeStamp = time.time()
                

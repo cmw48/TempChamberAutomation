@@ -6,10 +6,10 @@ board.on("ready", function() {
   var stepper = new five.Stepper({
     type: five.Stepper.TYPE.DRIVER,
     stepsPerRev: 200,
-    pins: [25, 15]
+    pins: [11, 13]
   });
 
-  stepper.rpm(10).cw().step(2000, function() {
+  stepper.rpm(10).ccw().step(200, function() {
     console.log("done");
   });
 });
