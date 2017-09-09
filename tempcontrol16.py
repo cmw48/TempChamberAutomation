@@ -21,16 +21,16 @@ import sys
 import getopt
 from pyfirmata import Arduino, util
 
-/**
+
 try:
-    board = Arduino('/dev/ttyACM0', baudrate = 9600)
+    board = Arduino('/dev/ttyUSB0', baudrate = 9600)
 except IOError as e:
     print "I/O error({0}): {1}".format(e.errno, e.strerror)
 except ValueError:
     print "Could not convert data to an integer."
 except:
     print "Unexpected errorC:", sys.exc_info()[0]
-**/
+
 
 #declare a global list of temps
 recent_temps=[]
@@ -204,8 +204,8 @@ def on_message(client, userdata, msg):
 def main(argv):
 
     debug = False
-    #host = "mqtt.opensensors.io"
-    host = "192.168.1.31"
+    host = "mqtt.opensensors.io"
+    #host = "192.168.1.31"
     client_id = 2940
     keepalive = 60
     port = 1883
@@ -280,9 +280,9 @@ def main(argv):
         client.on_subscribe = on_subscribe
 
         client.username_pw_set("wickeddevice", "mXtsGZB5")
-        #client.connect("mqtt.opensensors.io")
-        client.connect("192.168.1.31")
-        client.subscribe("/orgs/wd/aqe/temperature/egg00802294f10b0142", qos=0)
+        client.connect("mqtt.opensensors.io")
+        #client.connect("192.168.1.31")
+        client.subscribe("/orgs/wd/aqe/temperature/" + eggserial, qos=0)
 
         # message loop should be one of these (first two down't work for what we want)
         #client.loop_read()
@@ -304,14 +304,14 @@ def main(argv):
                 print('current temp:  ' + str(M.tempc) + "   msgs recieved:  " + str(msgCount) + "   time since last msg:  " + timeSinceLastMessage + "   total run time:  " + elapsedruntime)
             prevelapsedruntime = elapsedruntime
             # reset message flag
-            if (time.time() - lastMessageTimeStamp) < 20 :
+            if (time.time() - lastMessageTimeStamp) < 90 :
                 pass
             else:
                 print("reconnecting...")
-                client.unsubscribe("/orgs/wd/aqe/temperature/egg00802294f10b0142")
-                #client.connect("mqtt.opensensors.io")
-                client.connect("192.168.1.31")
-                client.subscribe("/orgs/wd/aqe/temperature/egg00802294f10b0142", qos=0)
+                client.unsubscribe("/orgs/wd/aqe/temperature/" + eggserial)
+                client.connect("mqtt.opensensors.io")
+                #client.connect("192.168.1.31")
+                client.subscribe("/orgs/wd/aqe/temperature/" + eggserial, qos=0)
                 lastMessageTimeStamp = time.time()
 
     except KeyboardInterrupt: # If CTRL+C is pressed, exit cleanly:
@@ -321,7 +321,7 @@ def main(argv):
         #board.digital[4].write(0)
         #board.digital[2].write(0)
         client.loop_stop()
-        client.unsubscribe("/orgs/wd/aqe/temperature/egg00802294f10b0142")
+        client.unsubscribe("/orgs/wd/aqe/temperature/" + eggserial)
         json.dump(temp_record, f)
         f.close()
 

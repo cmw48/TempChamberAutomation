@@ -1,17 +1,17 @@
-#!/usr/bin/python
+#!/usr/bin/python 
 # but not that python, use Anaconda
 #
 # Copyright (c) 2016 Chris Westling <cmwestling@gmail.com>
 # All Rights Reserved
-#
-# includes the Paho Python MQTT client - find resources at
+# 
+# includes the Paho Python MQTT client - find resources at 
 #     http://www.eclipse.org/paho/
 #
 
 # This code is to non-invasively automate the Thermotron temp chamber
-
+ 
 #TODO userio to enter an egg serial before each run
-#TODO implement raspi
+#TODO implement raspi 
 
 import paho.mqtt.client as paho
 import json
@@ -21,16 +21,14 @@ import sys
 import getopt
 from pyfirmata import Arduino, util
 
-/**
-try:
-    board = Arduino('/dev/ttyACM0', baudrate = 9600)
-except IOError as e:
-    print "I/O error({0}): {1}".format(e.errno, e.strerror)
-except ValueError:
-    print "Could not convert data to an integer."
-except:
-    print "Unexpected errorC:", sys.exc_info()[0]
-**/
+#try:
+#    board = Arduino('/dev/ttyACM0', baudrate = 9600)
+#except IOError as e:
+#    print "I/O error({0}): {1}".format(e.errno, e.strerror)
+#except ValueError:
+#    print "Could not convert data to an integer."
+#except:
+#    print "Unexpected errorC:", sys.exc_info()[0]
 
 #declare a global list of temps
 recent_temps=[]
@@ -40,7 +38,7 @@ deltas=[]
 
 # why does this need to be here instead of in main?
 global startblvrun
-global M
+global M 
 global msgCount
 msgCount = 0
 
@@ -49,20 +47,20 @@ class MQTT_Message:
     def __init__(self):
         self.values = []      # creates a new list of values for each message
         self.tempc = 0
-
+        
     def setmessage(self, msg_json):
         try:
 
             self.values = msg_json
-            self.tempc = self.values['raw-instant-value']
-
+            self.tempc = self.values['raw-instant-value'] 
+            
         except IOError as e:
             print "I/O error({0}): {1}".format(e.errno, e.strerror)
         except ValueError:
             print "Could not convert data to an integer."
         except:
             print "Unexpected errorC:", sys.exc_info()[0]
-
+   
     def getmessage(self):
         try:
             print(self.values)
@@ -73,8 +71,8 @@ class MQTT_Message:
         except ValueError:
             print "Could not convert data to an integer."
         except:
-            print "Unexpected errorA:", sys.exc_info()[0]
-
+            print "Unexpected errorA:", sys.exc_info()[0]    
+            
 
 
 # squawk when subscribe to egg topic is successful
@@ -83,8 +81,8 @@ def on_subscribe(client, userdata, mid, granted_qos):
 
     print("gathering data... ready in 10")
 
-# do something as each message is received
-# TODO: break all the workywork out of this function and just return the message to the main code
+# do something as each message is received 
+# TODO: break all the workywork out of this function and just return the message to the main code 
 # should this be a Message object?  (it's not really pervasive...)
 def on_message(client, userdata, msg):
 #pin assignments
@@ -108,28 +106,28 @@ def on_message(client, userdata, msg):
         global M
         global lastMessageTimeStamp
 
-        #print(msg.topic+" "+str(msg.qos)+" "+str(msg.payload))
+        #print(msg.topic+" "+str(msg.qos)+" "+str(msg.payload))    
         #samplePayload m = {"serial-number":"egg008028c05e9b0152","converted-value":25.96,"converted-units":"degC","raw-value":25.96,"raw-instant-value":25.96,"raw-units":"degC","sensor-part-number":"SHT25"}
         parsed_msg = json.loads(msg.payload)
         M.setmessage(parsed_msg)
         msgCount = msgCount + 1
-        lastMessageTimeStamp = time.time()
-
+        lastMessageTimeStamp = time.time()     
+        
         raw_instant_temp = (parsed_msg['raw-instant-value'])
-        temp_record.append([raw_instant_temp, time.time()])
+        temp_record.append([raw_instant_temp, time.time()])   
         recent_temps.append(raw_instant_temp)
 
         # review recent temps and report
         templistlen = len(recent_temps)
-        if templistlen <= 10:
+        if templistlen <= 10: 
           #once we are warmed up, this condition won't be met and this code will not run
           #use this spot to initialize local variables until we get threading working
           # set servopower flag to on
           #board.digital[5].write(1)
           startStable = time.time()
           stopUnstable = time.time()
-          stopStable = time.time()
-          startUnstable = time.time()
+          stopStable = time.time() 
+          startUnstable = time.time() 
           isStable = False
           print (str(11-templistlen)+"...")
           # fill up deltaslist
@@ -137,7 +135,7 @@ def on_message(client, userdata, msg):
         elif templistlen > 10 :
           # set servopower flag to off
           #board.digital[5].write(0)
-
+          
           for x in range (0, 10):
             deltas[x]=(recent_temps[x] - recent_temps[x+1])
           # print(deltas)
@@ -166,8 +164,8 @@ def on_message(client, userdata, msg):
             if isStable :
               isStable = False
               #board.digital[4].write(0)
-              stopStable = time.time()
-              startUnstable = time.time()
+              stopStable = time.time() 
+              startUnstable = time.time() 
               tempmsg = (str(recent_temps[9]) + "**NOT STABLE**" + str(sum(deltas)) + "   " + time.ctime(int(time.time())))
             else:
               tempmsg = (str(recent_temps[9]) + "--UNSTABLE-- " + str(sum(deltas)) + "   " + time.ctime(int(time.time())))
@@ -175,24 +173,20 @@ def on_message(client, userdata, msg):
             tempmsg = (str(recent_temps[9]) +" change/slope " + str(sum(deltas)) + "   " + time.ctime(int(time.time())))
             #print(isStable)
           if isStable:
-            #board.wickedstepper.step(1) 
             stableSince = time.time()-startStable
             print(tempmsg + " stable for the past " + (time.strftime("%H:%M:%S", time.gmtime(stableSince))))
-          else:
-            #board.wickedstepper.step(-1)
+          else: 
             print(tempmsg + " elapsed... " + (time.strftime("%H:%M:%S", time.gmtime(time.time()-startUnstable))))
           #TODO add blinkrate based on how large sumdeltas error is?
           if (sum(deltas)) > 0:
             # cooling
             #board.digital[3].write(0)
-            print "cooling..."
           else:
             # heating
-            #board.digital[3].write(1)
-            print "heating..."
-
+            #board.digital[3].write(1)          
+                       
         else:
-          print("templist error, this should never happen.")
+          print("templist error, this should never happen.") 
     except IOError as e:
       print "I/O error({0}): {1}".format(e.errno, e.strerror)
     except ValueError:
@@ -239,7 +233,7 @@ def main(argv):
             print(topic)
         elif opt in ("-e", "--eggserial"):
             eggserial = arg
-            print(eggserial)
+            print(eggserial)            
         elif opt in ("-u", "--username"):
             username = arg
         elif opt in ("-v", "--verbose"):
@@ -256,7 +250,7 @@ def main(argv):
     ##MAIN EXECUTION STARTS HERE##
     # TODO: consider this should be a "main" function or __init__ or what the heck?
 
-    M = MQTT_Message()
+    M = MQTT_Message() 
     print("Here we go! Press CTRL+C to exit")
     # reset timers and counts
     prevelapsedruntime = "00:00:00"
@@ -271,7 +265,7 @@ def main(argv):
         #board.digital[5].write(1)
         #start temp chamber run clock and set blvrun flag
         blvrun = 1
-        startblvrun = time.time()
+        startblvrun = time.time() 
         #assume room temp 25-27c
         #io for data (what needs to be saved?)
         f = open('workfile', 'w')
@@ -280,8 +274,8 @@ def main(argv):
         client.on_subscribe = on_subscribe
 
         client.username_pw_set("wickeddevice", "mXtsGZB5")
-        #client.connect("mqtt.opensensors.io")
-        client.connect("192.168.1.31")
+        client.connect("mqtt.opensensors.io")
+
         client.subscribe("/orgs/wd/aqe/temperature/egg00802294f10b0142", qos=0)
 
         # message loop should be one of these (first two down't work for what we want)
@@ -289,14 +283,14 @@ def main(argv):
         #client.loop_forever()
         client.loop_start()
 
-        while blvrun:
+        while blvrun: 
             #get one message (and do a buncha stuff in that function)
             client.on_message = on_message
-
+      
             # advance counts and clocks
             elapsedruntime = (time.strftime("%H:%M:%S", time.gmtime(time.time() - startblvrun)))
             timeSinceLastMessage = (time.strftime("%H:%M:%S", time.gmtime(time.time() - lastMessageTimeStamp)))
-
+                
             # only print time string when it changes (each second)
             if elapsedruntime == prevelapsedruntime:
                 pass
@@ -304,16 +298,16 @@ def main(argv):
                 print('current temp:  ' + str(M.tempc) + "   msgs recieved:  " + str(msgCount) + "   time since last msg:  " + timeSinceLastMessage + "   total run time:  " + elapsedruntime)
             prevelapsedruntime = elapsedruntime
             # reset message flag
-            if (time.time() - lastMessageTimeStamp) < 20 :
+            if (time.time() - lastMessageTimeStamp) < 90 :
                 pass
-            else:
+            else: 
                 print("reconnecting...")
                 client.unsubscribe("/orgs/wd/aqe/temperature/egg00802294f10b0142")
                 #client.connect("mqtt.opensensors.io")
                 client.connect("192.168.1.31")
-                client.subscribe("/orgs/wd/aqe/temperature/egg00802294f10b0142", qos=0)
+                client.subscribe("/orgs/wd/aqe/temperature/egg00802294f10b0142", qos=0)            
                 lastMessageTimeStamp = time.time()
-
+               
     except KeyboardInterrupt: # If CTRL+C is pressed, exit cleanly:
         # change power flag to off
         # change arduino LED to green
@@ -328,3 +322,4 @@ def main(argv):
 
 if __name__ == "__main__":
     main(sys.argv[1:])
+  
