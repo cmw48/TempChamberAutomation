@@ -20,15 +20,20 @@ import time
 import sys
 import getopt
 from pyfirmata import Arduino, util
+from Tkinter import *
 
 try:
-    board = Arduino('/dev/ttyUSB0', baudrate = 9600)
+    board = Arduino('/dev/ttyACM0', baudrate = 9600)
+    #board = Arduino('/dev/ttyUSB0', baudrate = 9600)
 except IOError as e:
     print "I/O error({0}): {1}".format(e.errno, e.strerror)
 except ValueError:
     print "Could not convert data to an integer."
 except:
     print "Unexpected errorC:", sys.exc_info()[0]
+
+board = Arduino('/dev/ttyACM0')
+#board = Arduino('/dev/ttyUSB0')
 
 #declare a global list of temps
 recent_temps=[]
@@ -79,35 +84,25 @@ class MQTT_Message:
 def on_subscribe(client, userdata, mid, granted_qos):
     print("Subscribed: "+str(mid)+" "+str(granted_qos))
 
-    print("gathering data... ready in 10")
-
 # do something as each message is received 
 # TODO: break all the workywork out of this function and just return the message to the main code 
 # should this be a Message object?  (it's not really pervasive...)
 def on_message(client, userdata, msg):
-#pin assignments
-# pin 0 is rx , pin 1 is tx
-# pin 2 is HIGH when machine is under test
-# pin 3 is HIGH when we are heating
-# pin 4 is HIGH when we are stable
-# pin 5 is HIGH when we enable temp servo control
-# pin 6 is HIGH is the flickRGB i/o pin
-# pin 7 is HIGH when we enable the COOL/OFF/HEAT servo
-
-
     try:
         global isStable
         global startStable
         global stopStable
         global startUnstable
         global stopUnstable
-        global stableSince
         global msgCount
         global M
         global lastMessageTimeStamp
+        # msgack deprecated
+        global msgAck
+        msgAck = 1  
 
         #print(msg.topic+" "+str(msg.qos)+" "+str(msg.payload))    
-        #samplePayload m = {"serial-number":"egg008028c05e9b0152","converted-value":25.96,"converted-units":"degC","raw-value":25.96,"raw-instant-value":25.96,"raw-units":"degC","sensor-part-number":"SHT25"}
+        #samplePayload m = {"serial-number":"egg00802d94e5080102","converted-value":25.96,"converted-units":"degC","raw-value":25.96,"raw-instant-value":25.96,"raw-units":"degC","sensor-part-number":"SHT25"}
         parsed_msg = json.loads(msg.payload)
         M.setmessage(parsed_msg)
         msgCount = msgCount + 1
@@ -129,7 +124,7 @@ def on_message(client, userdata, msg):
           stopStable = time.time() 
           startUnstable = time.time() 
           isStable = False
-          print (str(11-templistlen)+"...")
+          print ("gathering data, ready in " + str(11-templistlen)+"...")
           # fill up deltaslist
           deltas.append(templistlen)
         elif templistlen > 10 :
@@ -173,16 +168,12 @@ def on_message(client, userdata, msg):
             tempmsg = (str(recent_temps[9]) +" change/slope " + str(sum(deltas)) + "   " + time.ctime(int(time.time())))
             #print(isStable)
           if isStable:
-            stableSince = time.time()-startStable
-            print(tempmsg + " stable for the past " + (time.strftime("%H:%M:%S", time.gmtime(stableSince))))
+            print(tempmsg + " stable for " + (time.strftime("%H:%M:%S", time.gmtime(time.time()-startStable))))
           else: 
             print(tempmsg + " elapsed... " + (time.strftime("%H:%M:%S", time.gmtime(time.time()-startUnstable))))
-          #TODO add blinkrate based on how large sumdeltas error is?
           if (sum(deltas)) > 0:
-            # cooling
             board.digital[3].write(0)
           else:
-            # heating
             board.digital[3].write(1)          
                        
         else:
@@ -203,14 +194,13 @@ def main(argv):
     keepalive = 60
     port = 1883
     password = "mXtsGZB5"
-    topic = "/orgs/wd/aqe/temperature"
-    eggserial = "egg0080301531980121"
+    topic = "/orgs/wd/aqe/temperature/"
+    eggserial = "egg00802d94e5080102"
     username = "wickeddevice"
     verbose = False
 
-
     try:
-        opts, args = getopt.getopt(argv, "dh:i:k:p:P:t:u:v", ["debug", "id", "keepalive", "port", "password", "topic", "eggserial", "username", "verbose"])
+        opts, args = getopt.getopt(argv, "d:h:e:i:k:p:P:t:u:v", ["debug", "host", "eggserial", "id", "keepalive", "port", "password", "topic", "username", "verbose"])
     except getopt.GetoptError as s:
         print_usage()
         sys.exit(2)
@@ -219,6 +209,8 @@ def main(argv):
             debug = True
         elif opt in ("-h", "--host"):
             host = arg
+        elif opt in ("-e", "--eggserial"):
+            eggserial = arg
         elif opt in ("-i", "--id"):
             client_id = arg
         elif opt in ("-k", "--keepalive"):
@@ -230,9 +222,6 @@ def main(argv):
         elif opt in ("-t", "--topic"):
             topic = arg
             print(topic)
-        elif opt in ("-e", "--eggserial"):
-            eggserial = arg
-            print(eggserial)            
         elif opt in ("-u", "--username"):
             username = arg
         elif opt in ("-v", "--verbose"):
@@ -243,12 +232,16 @@ def main(argv):
         print_usage()
         sys.exit(2)
 
+    # does this work as a global init?  Why?
+
     global board
+    global msgAck
     global M
     global lastMessageTimeStamp
     ##MAIN EXECUTION STARTS HERE##
     # TODO: consider this should be a "main" function or __init__ or what the heck?
-
+    subscription = topic + eggserial
+    
     M = MQTT_Message() 
     print("Here we go! Press CTRL+C to exit")
     # reset timers and counts
@@ -260,8 +253,7 @@ def main(argv):
     try:
         # change power flag to on
         board.digital[2].write(1)
-        print("test running.\n")
-        board.digital[5].write(1)
+
         #start temp chamber run clock and set blvrun flag
         blvrun = 1
         startblvrun = time.time() 
@@ -275,7 +267,7 @@ def main(argv):
         client.username_pw_set("wickeddevice", "mXtsGZB5")
         client.connect("mqtt.opensensors.io")
 
-        client.subscribe("/orgs/wd/aqe/temperature/egg0080301531980121", qos=0)
+        client.subscribe(subscription, qos=0)
 
         # message loop should be one of these (first two down't work for what we want)
         #client.loop_read()
@@ -285,7 +277,8 @@ def main(argv):
         while blvrun: 
             #get one message (and do a buncha stuff in that function)
             client.on_message = on_message
-      
+            # will this work?
+            time.sleep(5)
             # advance counts and clocks
             elapsedruntime = (time.strftime("%H:%M:%S", time.gmtime(time.time() - startblvrun)))
             timeSinceLastMessage = (time.strftime("%H:%M:%S", time.gmtime(time.time() - lastMessageTimeStamp)))
@@ -295,15 +288,28 @@ def main(argv):
                 pass
             else:
                 print('current temp:  ' + str(M.tempc) + "   msgs recieved:  " + str(msgCount) + "   time since last msg:  " + timeSinceLastMessage + "   total run time:  " + elapsedruntime)
+            def tick():
+                s = time.strftime('%H:%M:%S')
+                if s != clock["text"]:
+                    clock["text"] = s
+                clock.after(200, tick)
+            root = Tk()
+            clock = Label(root, font=('times', 20, 'bold'), bg='green')
+            clock.pack(fill=BOTH, expand=1)	
+            tick()
+            #root.mainloop()
+            root.update_idletasks()
+            root.update()
+
             prevelapsedruntime = elapsedruntime
             # reset message flag
-            if (time.time() - lastMessageTimeStamp) < 20 :
+            if (time.time() - lastMessageTimeStamp) < 40 :
                 pass
             else: 
                 print("reconnecting...")
-                client.unsubscribe("/orgs/wd/aqe/temperature/egg0080301531980121")
+                client.unsubscribe(subscription)
                 client.connect("mqtt.opensensors.io")
-                client.subscribe("/orgs/wd/aqe/temperature/egg0080301531980121", qos=0)            
+                client.subscribe(subscription, qos=0)            
                 lastMessageTimeStamp = time.time()
                
     except KeyboardInterrupt: # If CTRL+C is pressed, exit cleanly:
@@ -313,7 +319,7 @@ def main(argv):
         board.digital[4].write(0)
         board.digital[2].write(0)
         client.loop_stop()
-        client.unsubscribe("/orgs/wd/aqe/temperature/egg0080301531980121")
+        client.unsubscribe(subscription)
         json.dump(temp_record, f)
         f.close()
 

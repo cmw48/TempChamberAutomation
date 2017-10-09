@@ -1,15 +1,15 @@
 
 
-Manual process: 
+Manual process:
 
-COOL TO -20 
+COOL TO -20
 1) start machine in COOL MODE
 a) flip lever to cool.  compressor starts.
 
 2) adjust set point to -20
-a) flip and hold set point switch 
+a) flip and hold set point switch
   note- ONLY NEEDED FOR HUMAN INPUT
-b) with set point pulled up, turn potentiometer CCW until needle touches -20 mark on white paper. 
+b) with set point pulled up, turn potentiometer CCW until needle touches -20 mark on white paper.
 Remember- eggs generate their own heat.  If ref temp says -28, eggs report around -24. (need verification)
 Also, setpoint on white paper may have needed adjustment.
 
@@ -28,7 +28,7 @@ when DofD < 0.5, what's the temp?
 once DofD < 0.3, we think that might be pretty close to stable
 
 when heating, does it really work out that we are about 1 full degree from target when we cross DofD at 0.9?
-think about "reate of change" and "value of change" 
+think about "rate of change" and "value of change"
 in 10 sec, we have a DofD of 0.4, but an overall jump of 0.2 degree
 
 need to look at DofD of 0.3 as "still climbing, but much more slowly than before"
@@ -38,7 +38,7 @@ how long did things stay at 0.2?  How many tenths of a degree did we gain?
 
 
 
-39.14 hit 7x 
+39.14 hit 7x
 then, oscillation between a higher number and a lower number 39.15-39.17-39.15
 the first time the value goes back down is significant
 then a creep up as the unit continues to heat, or maybe things in the box are equalizing
@@ -47,7 +47,7 @@ when we hit 0.1, we know we aren't going up much further
 the first 0.0 means we are stable
 mark the time, light a green light, start the "timer"
 
-consider: 
+consider:
 start = time.time()
 print("hello")
 end = time.time()
@@ -57,9 +57,9 @@ we have about 5 sec per tick
 about 12 ticks a minute
 if we miss a reading or a group of readings, A) we want to know, and B_ we'd kind of like to extend the time about that long
 so, missed ticks don't count towards "elapsed stable time"
-two questions 
+two questions
 (how long since the last reading?)
-and 
+and
 how many ticks have you counted since we were stable (and stayed stable!)?
 if you hit 720 good readings/ticks, that's about an hour.
 if we missed 20-50 ticks in there, we've got more than an hour which is still probably good.
@@ -87,9 +87,5 @@ green light for stable
 arrow on LCD shows direction of temp (get from DofD sign)
 representation of "force" based on DofD strentgh
 time elapsed since last temp change/time elapsed since temp stable
-indicator that says stability/time goal achieved- changing time in: countdown 
+indicator that says stability/time goal achieved- changing time in: countdown
 Aliens style yellow blinky and noise
- 
-
-
-
