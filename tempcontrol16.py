@@ -204,8 +204,8 @@ def on_message(client, userdata, msg):
 def main(argv):
 
     debug = False
-    host = "mqtt.opensensors.io"
-    #host = "192.168.1.31"
+    #host = "mqtt.opensensors.io"
+    host = "192.168.1.31"
     client_id = 2940
     keepalive = 60
     port = 1883
@@ -280,8 +280,8 @@ def main(argv):
         client.on_subscribe = on_subscribe
 
         client.username_pw_set("wickeddevice", "mXtsGZB5")
-        client.connect("mqtt.opensensors.io")
-        #client.connect("192.168.1.31")
+        #client.connect("mqtt.opensensors.io")
+        client.connect("192.168.1.31")
         client.subscribe("/orgs/wd/aqe/temperature/" + eggserial, qos=0)
 
         # message loop should be one of these (first two down't work for what we want)
