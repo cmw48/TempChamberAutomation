@@ -54,7 +54,7 @@ class MQTT_Message:
         try:
 
             self.values = msg_json
-            self.tempc = self.values['raw-instant-value']
+            self.tempc = self.values['converted-value']
 
         except IOError as e:
             print "I/O error({0}): {1}".format(e.errno, e.strerror)
@@ -66,7 +66,7 @@ class MQTT_Message:
     def getmessage(self):
         try:
             print(self.values)
-            print(str(self.values['raw-instant-value']))
+            print(str(self.values['converted-value']))
 
         except IOError as e:
             print "I/O error({0}): {1}".format(e.errno, e.strerror)
@@ -115,9 +115,9 @@ def on_message(client, userdata, msg):
         msgCount = msgCount + 1
         lastMessageTimeStamp = time.time()
 
-        raw_instant_temp = (parsed_msg['raw-instant-value'])
-        temp_record.append([raw_instant_temp, time.time()])
-        recent_temps.append(raw_instant_temp)
+        converted_temp = (parsed_msg['converted-value'])
+        temp_record.append([converted_temp, time.time()])
+        recent_temps.append(converted_temp)
 
         # review recent temps and report
         templistlen = len(recent_temps)
@@ -175,7 +175,7 @@ def on_message(client, userdata, msg):
             tempmsg = (str(recent_temps[9]) +" change/slope " + str(sum(deltas)) + "   " + time.ctime(int(time.time())))
             #print(isStable)
           if isStable:
-            #board.wickedstepper.step(1) 
+            #board.wickedstepper.step(1)
             stableSince = time.time()-startStable
             print(tempmsg + " stable for the past " + (time.strftime("%H:%M:%S", time.gmtime(stableSince))))
           else:
@@ -204,8 +204,8 @@ def on_message(client, userdata, msg):
 def main(argv):
 
     debug = False
-    host = "mqtt.opensensors.io"
-    #host = "192.168.1.31"
+    #host = "mqtt.opensensors.io"
+    host = "192.168.1.31"
     client_id = 2940
     keepalive = 60
     port = 1883
@@ -280,7 +280,7 @@ def main(argv):
         client.on_subscribe = on_subscribe
 
         client.username_pw_set("wickeddevice", "mXtsGZB5")
-        client.connect("mqtt.opensensors.io")
+        client.connect(host)
         #client.connect("192.168.1.31")
         client.subscribe("/orgs/wd/aqe/temperature/" + eggserial, qos=0)
 
