@@ -1,6 +1,1 @@
-D
-D
-D
-D
-D
-iThis 
+This is the readme for the TempChamberAutomation repo

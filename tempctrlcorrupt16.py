@@ -280,8 +280,17 @@ def main(argv):
         client.on_subscribe = on_subscribe
 
         client.username_pw_set("wickeddevice", "mXtsGZB5")
+<<<<<<< HEAD:tempcontrol20.py
+<<<<<<< HEAD:tempcontrol16.py
+        #client.connect("mqtt.opensensors.io")
+        client.connect("192.168.1.31")
+=======
+        client.connect(host)
+=======
         client.connect("mqtt.opensensors.io")
+>>>>>>> 4eeefe7560157eb8fa5aeb17e1e61f4012a462cd:tempcontrol16.py
         #client.connect("192.168.1.31")
+>>>>>>> 4a9c9050e8dd778e24a173444f927dad263c0dc7:tempcontrol20.py
         client.subscribe("/orgs/wd/aqe/temperature/" + eggserial, qos=0)
 
         # message loop should be one of these (first two down't work for what we want)
