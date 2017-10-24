@@ -211,7 +211,7 @@ def main(argv):
     keepalive = 60
     port = 1883
     #password = "mXtsGZB5"
-    password - "westling123"
+    password = "westling123"
     topic = "/orgs/wd/aqe/temperature"
     eggserial = "egg00802294f10b0142"
     username = "chris"
