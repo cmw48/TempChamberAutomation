@@ -175,7 +175,7 @@ def on_message(client, userdata, msg):
             tempmsg = (str(recent_temps[9]) +" change/slope " + str(sum(deltas)) + "   " + time.ctime(int(time.time())))
             #print(isStable)
           if isStable:
-            #board.wickedstepper.step(1) 
+            #board.wickedstepper.step(1)
             stableSince = time.time()-startStable
             print(tempmsg + " stable for the past " + (time.strftime("%H:%M:%S", time.gmtime(stableSince))))
           else:
@@ -204,15 +204,18 @@ def on_message(client, userdata, msg):
 def main(argv):
 
     debug = False
-    host = "mqtt.opensensors.io"
+    #host = "mqtt.opensensors.io"
     #host = "192.168.1.31"
+    host = "mqtt.wickeddevice.com"
     client_id = 2940
     keepalive = 60
     port = 1883
-    password = "mXtsGZB5"
+    #password = "mXtsGZB5"
+    password - "westling123"
     topic = "/orgs/wd/aqe/temperature"
     eggserial = "egg00802294f10b0142"
-    username = "wickeddevice"
+    username = "chris"
+    #username = "wickeddevice"
     verbose = False
 
 
@@ -279,8 +282,8 @@ def main(argv):
         client = paho.Client(client_id="2940")
         client.on_subscribe = on_subscribe
 
-        client.username_pw_set("wickeddevice", "mXtsGZB5")
-        client.connect("mqtt.opensensors.io")
+        client.username_pw_set(username, password)
+        client.connect(host)
         #client.connect("192.168.1.31")
         client.subscribe("/orgs/wd/aqe/temperature/" + eggserial, qos=0)
 
@@ -309,7 +312,7 @@ def main(argv):
             else:
                 print("reconnecting...")
                 client.unsubscribe("/orgs/wd/aqe/temperature/" + eggserial)
-                client.connect("mqtt.opensensors.io")
+                client.connect(host)
                 #client.connect("192.168.1.31")
                 client.subscribe("/orgs/wd/aqe/temperature/" + eggserial, qos=0)
                 lastMessageTimeStamp = time.time()
