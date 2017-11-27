@@ -110,7 +110,7 @@ def on_message(client, userdata, msg):
         global M
         global lastMessageTimeStamp
 
-        #print(msg.topic+" "+str(msg.qos)+" "+str(msg.payload))
+        print(msg.topic+" "+str(msg.qos)+" "+str(msg.payload))
         #samplePayload m = {"serial-number":"egg008028c05e9b0152","converted-value":25.96,"converted-units":"degC","raw-value":25.96,"raw-instant-value":25.96,"raw-units":"degC","sensor-part-number":"SHT25"}
         parsed_msg = json.loads(msg.payload)
         M.setmessage(parsed_msg)
@@ -218,8 +218,9 @@ def main(argv):
     port = 1883
     #password = "mXtsGZB5"
     password = "westling123"
-    topic = "/orgs/wd/aqe/temperature"
-    eggserial = "egg00802294f10b0142"
+    topic = "/orgs/wd/aqe/so2/#"
+    #eggserial = "egg00802294f10b0142"
+    eggserial = "egg00802e8e02980111"
     username = "chris"
     #username = "wickeddevice"
     verbose = False
@@ -291,7 +292,7 @@ def main(argv):
         client.username_pw_set(username, password)
         client.connect(host)
         #client.connect("192.168.1.31")
-        client.subscribe("/orgs/wd/aqe/temperature/" + eggserial, qos=0)
+        client.subscribe(topic, qos=0)
 
         # message loop should be one of these (first two down't work for what we want)
         #client.loop_read()
@@ -317,10 +318,10 @@ def main(argv):
                 pass
             else:
                 print("reconnecting...")
-                client.unsubscribe("/orgs/wd/aqe/temperature/" + eggserial)
+                client.unsubscribe(topic)
                 client.connect(host)
                 #client.connect("192.168.1.31")
-                client.subscribe("/orgs/wd/aqe/temperature/" + eggserial, qos=0)
+                client.subscribe(topic, qos=0)
                 lastMessageTimeStamp = time.time()
 
     except KeyboardInterrupt: # If CTRL+C is pressed, exit cleanly:
@@ -330,7 +331,7 @@ def main(argv):
         #board.digital[4].write(0)
         #board.digital[2].write(0)
         client.loop_stop()
-        client.unsubscribe("/orgs/wd/aqe/temperature/" + eggserial)
+        client.unsubscribe(topic)
         json.dump(temp_record, f)
         f.close()
 
