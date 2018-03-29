@@ -219,7 +219,9 @@ def main(argv):
     #password = "mXtsGZB5"
     password = "westling123"
     topic = "/orgs/wd/aqe/temperature"
+    # eggserial = "egg00802e077f880112"
     eggserial = "egg00802294f10b0142"
+    # eggserial = "egg00802fbeaf1b0130"
     username = "chris"
     #username = "wickeddevice"
     verbose = False
